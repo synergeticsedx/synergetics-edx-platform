@@ -1,0 +1,134 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML
+%>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="payment-gateway" id="payment-gateway">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Payment Gateway - CCAVenue</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="error hidden alert alert-danger">
+                <strong class="message"></strong>
+            </div>
+            <div class="alert alert-warning">
+                <strong>Please Configure your site on CCAVenue if you have not configured yet.</strong>
+            </div>
+            <form class="form-horizontal form-label-left" data-toggle="validator">
+                <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Enable Shopping Cart</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ENABLE_SHOPPING_CART" value="True" id="enable_shopping_cart"> Enable
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ENABLE_SHOPPING_CART" value="" id="disable_shopping_cart"> Disable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Merchant Id</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" name="MERCHANT_ID" id="merchant_id" class="form-control" value="${merchant_id}">
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2 col-md-2">
+                        <span><a href="https://world.ccavenue.com/downloads/CCAVenueWorldIntegrationManual.pdf" target="_blank">How to Get?</a></span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Secret Key</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input id="password_show" type="password" name="WORKING_KEY" class="form-control" value="${working_key}" autocomplete="off" data-toggle="password">
+                        <span class="fa fa-eye o_little_eye form-control-feedback" aria-hidden="true" id="password_show_button" style="cursor: pointer; pointer-events: auto"></span>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2 col-md-2">
+                        <span><a href="https://world.ccavenue.com/downloads/CCAVenueWorldIntegrationManual.pdf" target="_blank">How to Get?</a></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Access Code</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" name="ACCESS_CODE" id="access_code" class="form-control" value="${access_code}">
+                    </div>
+                    <div class="help_link control-label col-md-2 col-md-2">
+                        <span><a href="https://world.ccavenue.com/downloads/CCAVenueWorldIntegrationManual.pdf" target="_blank">How to Get?</a></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">PDF Receipt Billing Address</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <textarea class="form-control" rows="6" name="PDF_RECEIPT_BILLING_ADDRESS" id="pdf_receipt_billing_address">${pdf_receipt_billing_address}</textarea>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Billing Address"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">PDF Receipt Disclaimer</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <textarea class="form-control" rows="4" name="PDF_RECEIPT_DISCLAIMER_TEXT" id="pdf_receipt_disclaimer_text">${pdf_receipt_disclaimer_text}</textarea>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="PDF Disclaimer Text"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">PDF Receipt Footer</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <textarea class="form-control" name="PDF_RECEIPT_FOOTER_TEXT" id="pdf_receipt_footer_text">${pdf_receipt_footer_text}</textarea>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Payment Receipt Footer Text"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">PDF Receipt Terms &amp; Conditions</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <textarea class="form-control" name="PDF_RECEIPT_TERMS_AND_CONDITIONS" id="pdf_receipt_terms_condition">${pdf_receipt_terms_condition}</textarea>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Payment Receipt Terms & Conditions"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
+                      <button type="button" class="btn btn-success" id="payment-config">Save Changes</button>
+                    </div>                  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script>
+
+    var shoppingCart = "${enable_shopping_cart}"
+    if(shoppingCart == 'True'){
+        $("#enable_shopping_cart").attr("checked","checked")
+    }else{
+        $("#disable_shopping_cart").attr("checked","checked")
+    }
+    $("#password_show_button").mouseup(function(){
+        $("#password_show").attr("type", "password");
+    });
+    $("#password_show_button").mousedown(function(){
+        $("#password_show").attr("type", "text");
+    });
+
+</script>
+</%block>

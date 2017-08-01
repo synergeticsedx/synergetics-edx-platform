@@ -1,0 +1,106 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from openedx.core.djangolib.markup import HTML
+%>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/responsive.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/buttons.bootstrap.min.css')}">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="coupon-update" id="coupon-update">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Coupon Details</h2>
+            <a href="/site-administration/program-offers/" class="navbar-right" data-toggle="tooltip" title="Close" data-placement="bottom"><h2><span class="fa fa-times"></span></h2></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">    
+            <div class="error hidden alert alert-danger">
+                <strong class="message"></strong>
+            </div>
+            <form class="form-horizontal" id="program-coupon-details" data-toggle="validator">
+                <input type="hidden" name="coupon_id" value="${coupon_id}" id="coupon_id">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Code *</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" name="code" id="code" value="${code}" class="form-control" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Program *</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <select class="form-control" name="program_id" id="program_id" required>
+                        % for program in programs:
+                            % if program.id == program_id:
+                                <option value="${program_id}" selected>${program.name}</option>
+                            % else:
+                                <option value="${program.id}">${program.name}</option>
+                            % endif
+                        % endfor
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Description</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <textarea class="form-control" name="description" id="description">${description}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Discount *</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="number" name="discount" id="discount" min="0" max="100" value="${discount}" class="form-control" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Expiration Date</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <fieldset>
+                          <div class="control-group">
+                            <div class="controls">
+                              <div class="xdisplay_inputx form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" id="single_cal2" name="expiration_date" placeholder="Select Date and Time" aria-describedby="inputSuccess2Status" value="${expiration_data}">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Active</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12 coupon-active">
+                        <input type="checkbox" name="active" class="flat" id="active">
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <button type="button" class="btn btn-success" id="update-program-coupon">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/validator.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script>
+    $(document).ready(function(){
+        var isActive = "${active}"
+        if(isActive == "True"){
+            $("input[name='active']").attr("checked","checked")
+        }else{
+            return
+        } 
+    })
+</script>
+</%block>

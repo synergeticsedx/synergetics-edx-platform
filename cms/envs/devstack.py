@@ -30,7 +30,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ################################# LMS INTEGRATION #############################
 
-LMS_BASE = "localhost:8000"
+LMS_BASE = "http://edlab.edx.drcsystems.com"
 LMS_ROOT_URL = "http://{}".format(LMS_BASE)
 FEATURES['PREVIEW_LMS_BASE'] = "preview." + LMS_BASE
 

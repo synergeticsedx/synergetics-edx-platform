@@ -7,7 +7,8 @@ from .aws import *  # pylint: disable=wildcard-import, unused-wildcard-import
 
 # Don't use S3 in devstack, fall back to filesystem
 del DEFAULT_FILE_STORAGE
-MEDIA_ROOT = "/edx/var/edxapp/uploads"
+MEDIA_ROOT = "/edx/var/edxapp/media"
+# MEDIA_ROOT = "/edx/var/edxapp/uploads"
 
 
 DEBUG = True
@@ -88,7 +89,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 
 def should_show_debug_toolbar(_):
-    return True  # We always want the toolbar on devstack regardless of IP, auth, etc.
+    return False  # We always want the toolbar on devstack regardless of IP, auth, etc.
 
 
 ########################### PIPELINE #################################
@@ -119,10 +120,10 @@ FEATURES['ENABLE_PAYMENT_FAKE'] = True
 CC_PROCESSOR_NAME = 'CyberSource2'
 CC_PROCESSOR = {
     'CyberSource2': {
-        "PURCHASE_ENDPOINT": '/shoppingcart/payment_fake/',
-        "SECRET_KEY": 'abcd123',
-        "ACCESS_KEY": 'abcd123',
-        "PROFILE_ID": 'edx',
+        "PURCHASE_ENDPOINT": 'https://testsecureacceptance.cybersource.com/pay',
+        "SECRET_KEY": '50d7d454f00e47e69c4719dbdde3cdb2f0c0970c1b6c497ea31f944661e39fdec5226b0c1efb4df6929cfb09699c62d967c30d8623284a3dbc6583ccaea9383a1b1b44798e75428688bc6d63f0824d31cc36541a76e94811b9f8792ec04ce706b81a37f647524cf4ac243f897b0f472948217a24c2284c2c92f640fc676e102f',
+        "ACCESS_KEY": '3a85bb0e18263428a5244edc15a5085f',
+        "PROFILE_ID": '65E7584A-9BE4-42B4-8DAA-1288378ADCE1',
     }
 }
 
@@ -182,11 +183,15 @@ COURSE_DISCOVERY_MEANINGS = {
         },
     },
     'language': LANGUAGE_MAP,
+    'subject': {
+        'name': 'Category'
+    }
 }
 
 FEATURES['ENABLE_COURSE_DISCOVERY'] = True
 # Setting for overriding default filtering facets for Course discovery
 # COURSE_DISCOVERY_FILTERS = ["org", "language", "modes"]
+COURSE_DISCOVERY_FILTERS = ["subject", "org", "language", "modes"]
 FEATURES['COURSES_ARE_BROWSEABLE'] = True
 HOMEPAGE_COURSE_MAX = 9
 

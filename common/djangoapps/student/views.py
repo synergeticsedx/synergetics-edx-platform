@@ -15,6 +15,7 @@ from requests import HTTPError
 from ipware.ip import get_ip
 
 import edx_oauth2_provider
+from django.core import serializers
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User, AnonymousUser
@@ -128,6 +129,17 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.core.djangoapps.theming import helpers as theming_helpers
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
 from openedx.core.djangoapps.catalog.utils import get_programs_data
+from openedx.core.djangoapps.micro_masters.models import ProgramEnrollment, ProgramGeneratedCertificate, Program
+
+from attendance.views import track_attendance
+from leaderboard.models import LeaderBoard
+from homepage_content.models import Testimonials, StatisticalCounter
+from admin_dash.helpers import (
+    get_num_students,
+    get_num_courses,
+    get_num_instructors,
+    get_num_programs
+)
 
 
 log = logging.getLogger("edx.student")
@@ -217,6 +229,41 @@ def index(request, extra_context=None, user=AnonymousUser()):
         programs_list = get_programs_data(user)
 
     context["programs_list"] = programs_list
+
+    track_attendance(request)
+    programs = Program.objects.filter()
+    started_programs = []
+    for program in programs:
+        if program.start <= datetime.datetime.now(UTC).date():
+            started_programs += [program]
+
+    context['programs'] = started_programs
+
+    testimonials = Testimonials.objects.filter(is_active=1)
+
+    context['testimonials'] = testimonials
+
+    statistical = StatisticalCounter.objects.get()
+
+    statistical_data = serializers.serialize("python", [StatisticalCounter.objects.get()])
+
+    certified_users = 0
+    if statistical.certified_users:
+        certified_users = LeaderBoard.objects.filter(has_passed=True).count()
+
+    statistical_details = {}
+    statistical_details.update({
+        'fields': statistical_data[0].get('fields'),
+        'values': {
+            'number_of_courses': get_num_courses() if statistical.number_of_courses else 0,
+            'number_of_instructors': get_num_instructors() if statistical.number_of_instructors else 0,
+            'number_of_paths': len(get_num_programs()) if statistical.number_of_paths else 0,
+            'students_registered': get_num_students() if statistical.students_registered else 0,
+            'certified_users': certified_users
+        }
+    })
+
+    context['statistical'] = statistical_details
 
     return render_to_response('index.html', context)
 
@@ -585,6 +632,7 @@ def dashboard(request):
         The dashboard response.
 
     """
+
     user = request.user
 
     platform_name = configuration_helpers.get_value("platform_name", settings.PLATFORM_NAME)
@@ -756,6 +804,84 @@ def dashboard(request):
     else:
         redirect_message = ''
 
+    # for learning path and course progress
+    # course progress
+    course_grades = {}
+    for enrollment in course_enrollments:
+        try:
+            course_grade = LeaderBoard.objects.get(student=user, course_id=enrollment.course_id)
+            course_grades.update({
+                enrollment.course_id: {
+                    'points': course_grade.points,
+                    'pass': course_grade.has_passed
+                }
+            })
+        except Exception, e:
+            course_grades.update({
+                enrollment.course_id: {
+                    'points': 0,
+                    'pass': False
+                }
+            })
+
+    # enrolled programs
+    user_program_enrollments = ProgramEnrollment.objects.filter(user=user, is_active=True)
+    programs = {}
+    program_grades = {}
+    program_course_states = {}
+    for user_program_enrollment in user_program_enrollments:
+        courses = []
+        no_of_courses = len(user_program_enrollment.program.courses.select_related())
+        program_grade = 0
+        course_pass_count = 0
+        course_in_progress = 0
+        course_not_started = 0
+        for course in user_program_enrollment.program.courses.select_related():
+            course_enroll = CourseEnrollment.get_enrollment(user, course.course_key)
+            courses += [course_enroll]
+            if course_enroll in course_enrollments:
+                course_enrollments.remove(course_enroll)
+            course_point = course_grades.get(course.course_key, '')
+            program_grade += course_point.get('points', 0.0)
+            if course_point.get('points'):
+                try:
+                    course_grade = LeaderBoard.objects.get(student=user, course_id=course.course_key)
+                    if course_grade.has_passed:
+                        course_pass_count += 1
+                    else:
+                        course_in_progress += 1
+                except Exception, e:
+                    course_in_progress += 1
+            else:
+                course_not_started += 1
+
+        issued = False
+        if no_of_courses == course_pass_count and course_pass_count:
+            issued = True
+            ProgramGeneratedCertificate.create_user_certificate(
+                user,
+                user_program_enrollment.program,
+                issued
+            )
+        else:
+            ProgramGeneratedCertificate.create_user_certificate(
+                user,
+                user_program_enrollment.program,
+                issued
+            )
+        program_course_states.update({
+            user_program_enrollment.program: {
+                'in_progress': course_in_progress,
+                'passed': course_pass_count,
+                'not_started': course_not_started
+            }
+        })
+        program_grades.update({user_program_enrollment.program: program_grade / no_of_courses})
+        programs.update({user_program_enrollment.program: courses})
+
+    # get user certificate for program
+    user_program_certificates = ProgramGeneratedCertificate.objects.filter(user=user, issued=True)
+
     context = {
         'enrollment_message': enrollment_message,
         'redirect_message': redirect_message,
@@ -789,6 +915,11 @@ def dashboard(request):
         'show_program_listing': ProgramsApiConfig.current().show_program_listing,
         'disable_courseware_js': True,
         'display_course_modes_on_dashboard': enable_verified_certificates and display_course_modes_on_dashboard,
+        'programs': programs,
+        'user_program_grades': program_grades,
+        'user_course_grades': course_grades,
+        'user_program_certificates': user_program_certificates,
+        'program_course_states': program_course_states,
     }
 
     ecommerce_service = EcommerceService()
@@ -1867,8 +1998,11 @@ def create_account_with_params(request, params):
     # logged in until they close the browser. They can't log in again until they click
     # the activation link from the email.
     new_user = authenticate(username=user.username, password=params['password'])
-    login(request, new_user)
-    request.session.set_expiry(0)
+    # did comment for user not logged in before he/she activate his account
+    # if not 'creating_user_from_site_admin' in params:
+    #     login(request, new_user)
+    #     request.session.set_expiry(0)
+
 
     try:
         record_registration_attributions(request, new_user)

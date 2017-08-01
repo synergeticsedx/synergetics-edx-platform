@@ -1,0 +1,145 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from django.core.urlresolvers import reverse
+%>
+
+<%block name="content">
+  <div class="dashboard_graph">
+    <div class="row x_title">
+      <div class="col-md-6">
+        <h3>Demographics <small>Know your users</small></h3>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="chart_age" class="demo-placeholder"></div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="chart_education" class="demo-placeholder"></div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="chart_gender" class="demo-placeholder"></div>
+    </div>
+
+    <div class="clearfix"></div>
+  </div>
+</%block>
+
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('admin_dash/js/highcharts.js')}"></script>
+  <script type="text/javascript" src="${static.url('admin_dash/js/exporting.js')}"></script>
+  <script type="text/javascript">
+    
+    Highcharts.setOptions({
+        colors: ['#52D017']
+    });
+
+    var chart_age = Highcharts.chart('chart_age', {
+        chart: {
+          type: 'column'
+      },
+        credits: { enabled: false },
+        title: {
+            text: 'How old are my students?'
+        },
+        xAxis: {
+            title: {
+                text: 'Age distribution'
+            },
+            categories: eval("${age.keys()}")
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Students'
+            }
+        },
+        plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0,
+              showInLegend: false
+          }
+        },
+        series: [{
+            name: 'Students',
+            data: eval("${age.values()}")
+        }]
+    });
+
+    Highcharts.setOptions({
+        colors: ['#87CEEB']
+    });
+
+    var chart_education = Highcharts.chart('chart_education', {
+        chart: {
+          type: 'column'
+      },
+        credits: { enabled: false },
+        title: {
+            text: 'What level of education do my learners have?'
+        },
+        xAxis: {
+            title: {
+                text: 'Education'
+            },
+            categories: eval("${education_labels}")
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Students'
+            }
+        },
+        plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0,
+              showInLegend: false
+          }
+        },
+        series: [{
+            name: 'Students',
+            data: eval("${education.values()}")
+        }]
+    });
+
+    Highcharts.setOptions({
+        colors: ['#FFA62F', '#F62217', '#7D0552', '#4B0082']
+    }); 
+    
+    var chart_gender = Highcharts.chart('chart_gender', {
+        credits: { enabled: false },
+        title: {
+            text: 'What is the learners gender breadkdown?'
+        },
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Student Education',
+            data: eval("${gender}")
+        }]
+    });
+  </script>
+</%block>

@@ -1,0 +1,150 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%block name="headextra">
+</%block>
+<%block name="content">
+<div class="course_chart">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Courses Details</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="number_of_enrollments" class="demo-placeholder"></div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="number_of_passed" class="demo-placeholder"></div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="passed_vs_enrollments" class="demo-placeholder"></div>
+            </div>          
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('admin_dash/js/highcharts.js')}"></script>
+  <script type="text/javascript" src="${static.url('admin_dash/js/exporting.js')}"></script>
+  <script>
+    $(document).ready(function(){
+        var courses = "${courses}";
+
+        Highcharts.setOptions({
+            colors: ['#54C571']
+        });
+
+        var NumberOfEnrollments = Highcharts.chart('number_of_enrollments', {
+            chart: {
+                type: 'column',
+            },
+            credits: { enabled: false },
+            title: {
+                text: 'Total Enrollments'
+            },
+            xAxis: {
+                title: {
+                    text: 'Courses'
+                },
+                categories: eval("${courses}")
+            },
+            yAxis: {
+                title: {
+                    text: 'Students'
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    showInLegend: false
+                }
+            },
+            series: [{
+                name: 'Enrollments',
+                data: eval("${no_of_enrollments}"),
+                maxPointWidth: 50
+            }]
+        });
+
+        Highcharts.setOptions({
+            colors: ['#C454A8']
+        });
+
+        var NumberOfPassed = Highcharts.chart('number_of_passed', {
+            chart: {
+                type: 'column'
+            },
+            credits: { enabled: false },
+            title: {
+                text: 'Total Passed'
+            },
+            xAxis: {
+                title: {
+                    text: 'Courses'
+                },
+                categories: eval("${courses}")
+            },
+            yAxis: {
+                title: {
+                    text: 'Students'
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    showInLegend: false
+                },      
+            },
+            series: [{
+                name: 'Enrollments',
+                data: eval("${no_of_passed_users}"),
+                maxPointWidth: 50
+            }]
+        });
+
+        Highcharts.setOptions({
+            colors: ['#54C571', '#C454A8']
+        });
+    
+        var PassedVsEnrollments = Highcharts.chart('passed_vs_enrollments', {
+            chart: {
+                type: 'column'
+            },
+            credits: { enabled: false },
+            title: {
+                text: 'Enrollments vs Passed'
+            },
+            xAxis: {
+                title: {
+                    text: 'Courses'
+                },
+                categories: eval("${courses}")
+            },
+            yAxis: {
+                title: {
+                    text: 'Students'
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    showInLegend: false
+                },                
+            },
+            series: [{
+                name: 'Total Students',
+                data: eval("${no_of_enrollments}"),
+                maxPointWidth: 50
+            },
+            {
+                name: 'Passed Students',
+                data: eval("${no_of_passed_users}"),
+                maxPointWidth: 50
+            }]
+        });                    
+    })
+  </script>
+</%block>

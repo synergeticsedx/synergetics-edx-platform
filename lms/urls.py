@@ -964,3 +964,15 @@ if settings.FEATURES.get('ENABLE_FINANCIAL_ASSISTANCE_FORM'):
             name='submit_financial_assistance_request'
         )
     )
+
+urlpatterns += patterns('',
+    url(r'^programs/', include('openedx.core.djangoapps.micro_masters.urls')),
+)
+
+urlpatterns += (
+    url(r'^leaderboard/$', 'leaderboard.views.show_leaderboard', name='leaderboard'),
+)
+
+urlpatterns += (
+    url(r'^site-administration/', include('admin_dash.urls')),
+)

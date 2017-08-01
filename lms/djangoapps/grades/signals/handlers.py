@@ -28,6 +28,7 @@ from .signals import (
 from ..new.course_grade import CourseGradeFactory
 from ..scores import weighted_score
 from ..tasks import recalculate_subsection_grade_v2
+from .signals import COURSE_GRADE_CHANGED
 
 log = getLogger(__name__)
 
@@ -198,7 +199,13 @@ def recalculate_course_grade(sender, course, course_structure, user, **kwargs): 
     """
     Updates a saved course grade.
     """
-    CourseGradeFactory().update(user, course, course_structure)
+    updated_grade = CourseGradeFactory().update(user, course, course_structure)
+    COURSE_GRADE_CHANGED.send(
+        sender=None,
+        user=user,
+        course=course,
+        grade=updated_grade,
+    )
 
 
 def _emit_problem_submitted_event(kwargs):

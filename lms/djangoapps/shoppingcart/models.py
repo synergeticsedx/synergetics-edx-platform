@@ -53,6 +53,7 @@ from .exceptions import (
 )
 from shoppingcart.pdf import PDFInvoice
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
 log = logging.getLogger("shoppingcart")
@@ -1341,6 +1342,7 @@ class Coupon(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
+    course_overview = models.ForeignKey(CourseOverview, on_delete=models.CASCADE, default=None)
 
     def __unicode__(self):
         return "[Coupon] code: {} course: {}".format(self.code, self.course_id)

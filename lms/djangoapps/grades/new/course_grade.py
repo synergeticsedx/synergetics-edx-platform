@@ -374,7 +374,7 @@ class CourseGradeFactory(object):
         """
         Updates the CourseGrade for this Factory's student.
         """
-        self._compute_and_update_grade(student, course, course_structure)
+        return self._compute_and_update_grade(student, course, course_structure)
 
     def get_persisted(self, student, course):
         """

@@ -20,6 +20,10 @@ def order_history(user, **kwargs):
     order_history_list = []
     purchased_order_items = OrderItem.objects.filter(user=user, status='purchased').select_subclasses().order_by('-fulfilled_time')
     for order_item in purchased_order_items:
+        try:
+            order_title = order_item.pdf_receipt_display_name
+        except:
+            order_title = None
         # Avoid repeated entries for the same order id.
         if order_item.order.id not in [item['order_id'] for item in order_history_list]:
             # If we are in a Microsite, then include the orders having courses attributed (by ORG) to that Microsite.
@@ -30,7 +34,9 @@ def order_history(user, **kwargs):
                 if (course_org_filter and course_org_filter == order_item_course_id.org) or \
                         (course_org_filter is None and order_item_course_id.org not in org_filter_out_set):
                     order_history_list.append({
-                        'order_id': order_item.order.id,
+                        'number': order_item.order.id,
+                        'title': order_title,
+                        'price': float(order_item.order.total_cost),
                         'receipt_url': reverse('shoppingcart.views.show_receipt', kwargs={'ordernum': order_item.order.id}),
                         'order_date': ModuleI18nService().strftime(order_item.order.purchase_time, 'SHORT_DATE')
                     })

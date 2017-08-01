@@ -19,6 +19,8 @@ from xmodule.annotator_mixin import html_to_text
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.library_tools import normalize_key_for_search
 
+from openedx.core.djangoapps.micro_masters.program_reindex import index_course_programs
+
 # REINDEX_AGE is the default amount of time that we look back for changes
 # that might have happened. If we are provided with a time at which the
 # indexing is triggered, then we know it is safe to only index items
@@ -629,6 +631,7 @@ class CourseAboutSearchIndexer(object):
         # Broad exception handler to protect around and report problems with indexing
         try:
             searcher.index(cls.DISCOVERY_DOCUMENT_TYPE, [course_info])
+            index_course_programs(course_id)
         except:  # pylint: disable=bare-except
             log.exception(
                 "Course discovery indexing error encountered, course discovery index may be out of date %s",

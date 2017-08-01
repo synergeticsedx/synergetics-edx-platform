@@ -48,6 +48,8 @@ from third_party_auth.decorators import xframe_allow_whitelisted
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.date_utils import strftime_localized
 from util.enterprise_helpers import set_enterprise_branding_filter_param
+from openedx.core.djangoapps.micro_masters.views import programs_order_history
+from shoppingcart.api import order_history
 
 AUDIT_LOG = logging.getLogger("audit")
 log = logging.getLogger(__name__)
@@ -433,7 +435,8 @@ def account_settings_context(request):
 
     year_of_birth_options = [(unicode(year), unicode(year)) for year in UserProfile.VALID_YEARS]
     try:
-        user_orders = get_user_orders(user)
+        user_orders = order_history(user)
+        user_orders += programs_order_history(user)
     except:  # pylint: disable=bare-except
         log.exception('Error fetching order history from Otto.')
         # Return empty order list as account settings page expect a list and

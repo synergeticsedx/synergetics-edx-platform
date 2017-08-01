@@ -95,6 +95,7 @@ from xmodule.tabs import CourseTabList
 from xmodule.x_module import STUDENT_VIEW
 from ..entrance_exams import user_must_complete_entrance_exam
 from ..module_render import get_module_for_descriptor, get_module, get_module_by_usage_id
+from openedx.core.djangoapps.micro_masters.models import Program
 
 log = logging.getLogger("edx.courseware")
 
@@ -637,6 +638,9 @@ def course_about(request, course_id):
         # Overview
         overview = CourseOverview.get_from_id(course.id)
 
+        # check course contain any program
+        course_in_program = Program.course_has_part_of_programs(course_id)
+
         context = {
             'course': course,
             'course_details': course_details,
@@ -665,6 +669,7 @@ def course_about(request, course_id):
             'cart_link': reverse('shoppingcart.views.show_cart'),
             'pre_requisite_courses': pre_requisite_courses,
             'course_image_urls': overview.image_urls,
+            'course_in_program': course_in_program,
         }
         inject_coursetalk_keys_into_context(context, course_key)
 

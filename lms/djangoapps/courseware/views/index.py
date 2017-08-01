@@ -50,7 +50,7 @@ from ..masquerade import setup_masquerade
 from ..model_data import FieldDataCache
 from ..module_render import toc_for_course, get_module_for_descriptor
 from .views import get_current_child, registered_for_course
-
+from attendance.views import track_attendance
 
 log = logging.getLogger("edx.courseware.views.index")
 TEMPLATE_IMPORTS = {'urllib': urllib}
@@ -93,6 +93,8 @@ class CoursewareIndex(View):
         self.position = position
         self.chapter, self.section = None, None
         self.url = request.path
+
+        track_attendance(request)
 
         try:
             self._init_new_relic()

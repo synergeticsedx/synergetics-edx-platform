@@ -74,3 +74,12 @@ SUBSECTION_SCORE_CHANGED = Signal(
         'subsection_grade',  # SubsectionGrade object
     ]
 )
+
+
+COURSE_GRADE_CHANGED = Signal(
+    providing_args=[
+        'user',  # User object
+        'course',  # Course object
+        'grade',  # Course Grade object
+    ]
+)

@@ -315,7 +315,7 @@ FEATURES = {
     'LICENSING': False,
 
     # Certificates Web/HTML Views
-    'CERTIFICATES_HTML_VIEW': False,
+    'CERTIFICATES_HTML_VIEW': True,
 
     # Batch-Generated Certificates from Instructor Dashboard
     'CERTIFICATES_INSTRUCTOR_GENERATION': False,
@@ -342,7 +342,7 @@ FEATURES = {
     'ENABLE_SPECIAL_EXAMS': False,
 
     # Enable OpenBadge support. See the BADGR_* settings later in this file.
-    'ENABLE_OPENBADGES': False,
+    'ENABLE_OPENBADGES': True,
 
     # Enable LTI Provider feature.
     'ENABLE_LTI_PROVIDER': False,
@@ -2160,6 +2160,21 @@ INSTALLED_APPS = (
 
     # Unusual migrations
     'database_fixups',
+
+    # Learning path
+    'openedx.core.djangoapps.micro_masters',
+
+    # leaderboard
+    'lms.djangoapps.leaderboard.apps.LeaderboardConfig',
+
+    # student attendance
+    'attendance',
+
+    # homepage content adding from admin, example testimonials
+    'homepage_content',
+
+    # for storing singleton objects
+    'solo',
 )
 
 # Migrations which are not in the standard module "migrations"
@@ -2217,12 +2232,12 @@ SUPPORT_SITE_LINK = ''
 SOCIAL_SHARING_SETTINGS = {
     # Note: Ensure 'CUSTOM_COURSE_URLS' has a matching value in cms/envs/common.py
     'CUSTOM_COURSE_URLS': False,
-    'DASHBOARD_FACEBOOK': False,
+    'DASHBOARD_FACEBOOK': True,
     'CERTIFICATE_FACEBOOK': False,
     'CERTIFICATE_FACEBOOK_TEXT': None,
     'CERTIFICATE_TWITTER': False,
     'CERTIFICATE_TWITTER_TEXT': None,
-    'DASHBOARD_TWITTER': False,
+    'DASHBOARD_TWITTER': True,
     'DASHBOARD_TWITTER_TEXT': None
 }
 
@@ -2408,9 +2423,9 @@ CERT_NAME_LONG = "Certificate of Achievement"
 BADGING_BACKEND = 'badges.backends.badgr.BadgrBackend'
 
 # Be sure to set up images for course modes using the BadgeImageConfiguration model in the certificates app.
-BADGR_API_TOKEN = None
+BADGR_API_TOKEN = '6552d4c121d7acbee250aee77025851d5561fe94'
 # Do not add the trailing slash here.
-BADGR_BASE_URL = "http://localhost:8005"
+BADGR_BASE_URL = "http://192.168.0.234:8005"
 BADGR_ISSUER_SLUG = "example-issuer"
 # Number of seconds to wait on the badging server when contacting it before giving up.
 BADGR_TIMEOUT = 10

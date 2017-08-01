@@ -1,0 +1,11 @@
+<%!
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+%>
+Congratulation! You have been successfully registered on ${configuration_helpers.get_value('SITE_NAME')}
+Login to your account http://${configuration_helpers.get_value('SITE_NAME')}. Here are your credentials
+Username: ${email}
+Password: ${password}
+Please change your password once you log in.
+
+Regards,
+${configuration_helpers.get_value('PLATFORM_NAME')} Team
