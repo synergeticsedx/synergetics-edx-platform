@@ -52,6 +52,20 @@ log = logging.getLogger(__name__)
 
 CC_PROCESSOR = settings.CC_PROCESSOR.get(settings.CC_PROCESSOR_NAME)
 
+
+import shoppingcart
+from django.conf import settings
+from courseware.access import has_access
+from course_modes.models import CourseMode
+from student.models import CourseEnrollment
+from commerce.utils import EcommerceService
+from shoppingcart.utils import is_shopping_cart_enabled
+from courseware.courses import (
+    get_course_with_access,
+    get_permission_for_course_about)
+from courseware.views.views import get_cosmetic_display_price
+
+
 # Start before payment_method
 
 
@@ -120,7 +134,7 @@ def get_purchase_params(cart, callback_url=None):
     """
 
     params = OrderedDict()
-    program_price = cart.discounted_price if cart.discounted_price else cart.program.price
+    program_price = cart.discounted_price if cart.discount_applied else cart.program.price
     amount = "{0:0.2f}".format(program_price)
     params['amount'] = amount
     params['currency'] = settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
@@ -681,6 +695,7 @@ def render_purchase_form_html(cart, callback_url=None, extra_data=None):
     })
 
 
+@csrf_exempt
 @login_required
 def program_buy(request, program_id):
 
@@ -706,7 +721,7 @@ def program_buy(request, program_id):
     cart = ProgramOrder.get_or_create_order(user, program)
 
     # check coupon expiration_date
-    if cart.discounted_price:
+    if cart.discount_applied:
         try:
             coupon_redemption = ProgramCouponRedemption.objects.get(user=user, order=cart)
             if coupon_redemption.coupon.is_active:
@@ -781,6 +796,7 @@ def reset_code_redemption(request):
     except Exception, e:
         return HttpResponseNotFound(_("Order does not exist"))
     order.discounted_price = 0
+    order.discount_applied = False
     order.save()
     ProgramCouponRedemption.remove_coupon_redemption_from_cart(request.user, order)
     return HttpResponse('reset')

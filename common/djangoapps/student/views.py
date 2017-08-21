@@ -231,13 +231,6 @@ def index(request, extra_context=None, user=AnonymousUser()):
     context["programs_list"] = programs_list
 
     track_attendance(request)
-    programs = Program.objects.filter()
-    started_programs = []
-    for program in programs:
-        if program.start <= datetime.datetime.now(UTC).date():
-            started_programs += [program]
-
-    context['programs'] = started_programs
 
     testimonials = Testimonials.objects.filter(is_active=1)
 
@@ -262,6 +255,18 @@ def index(request, extra_context=None, user=AnonymousUser()):
             'certified_users': certified_users
         }
     })
+
+    if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+        programs = Program.objects.filter()
+        started_programs = []
+        for program in programs:
+            if program.start <= datetime.datetime.now(UTC).date():
+                started_programs += [program]
+
+        context['programs'] = started_programs
+    else:
+        del statistical_details.get('values')['number_of_paths']
+        del statistical_details.get('fields')['number_of_paths']
 
     context['statistical'] = statistical_details
 
@@ -824,63 +829,64 @@ def dashboard(request):
                 }
             })
 
+    if settings.FEATURES['ENABLE_MICRO_MASTERS']:
     # enrolled programs
-    user_program_enrollments = ProgramEnrollment.objects.filter(user=user, is_active=True)
-    programs = {}
-    program_grades = {}
-    program_course_states = {}
-    for user_program_enrollment in user_program_enrollments:
-        courses = []
-        no_of_courses = len(user_program_enrollment.program.courses.select_related())
-        program_grade = 0
-        course_pass_count = 0
-        course_in_progress = 0
-        course_not_started = 0
-        for course in user_program_enrollment.program.courses.select_related():
-            course_enroll = CourseEnrollment.get_enrollment(user, course.course_key)
-            courses += [course_enroll]
-            if course_enroll in course_enrollments:
-                course_enrollments.remove(course_enroll)
-            course_point = course_grades.get(course.course_key, '')
-            program_grade += course_point.get('points', 0.0)
-            if course_point.get('points'):
-                try:
-                    course_grade = LeaderBoard.objects.get(student=user, course_id=course.course_key)
-                    if course_grade.has_passed:
-                        course_pass_count += 1
-                    else:
+        user_program_enrollments = ProgramEnrollment.objects.filter(user=user, is_active=True)
+        programs = {}
+        program_grades = {}
+        program_course_states = {}
+        for user_program_enrollment in user_program_enrollments:
+            courses = []
+            no_of_courses = len(user_program_enrollment.program.courses.select_related())
+            program_grade = 0
+            course_pass_count = 0
+            course_in_progress = 0
+            course_not_started = 0
+            for course in user_program_enrollment.program.courses.select_related():
+                course_enroll = CourseEnrollment.get_enrollment(user, course.course_key)
+                courses += [course_enroll]
+                if course_enroll in course_enrollments:
+                    course_enrollments.remove(course_enroll)
+                course_point = course_grades.get(course.course_key, '')
+                program_grade += course_point.get('points', 0.0)
+                if course_point.get('points'):
+                    try:
+                        course_grade = LeaderBoard.objects.get(student=user, course_id=course.course_key)
+                        if course_grade.has_passed:
+                            course_pass_count += 1
+                        else:
+                            course_in_progress += 1
+                    except Exception, e:
                         course_in_progress += 1
-                except Exception, e:
-                    course_in_progress += 1
+                else:
+                    course_not_started += 1
+
+            issued = False
+            if no_of_courses == course_pass_count and course_pass_count:
+                issued = True
+                ProgramGeneratedCertificate.create_user_certificate(
+                    user,
+                    user_program_enrollment.program,
+                    issued
+                )
             else:
-                course_not_started += 1
+                ProgramGeneratedCertificate.create_user_certificate(
+                    user,
+                    user_program_enrollment.program,
+                    issued
+                )
+            program_course_states.update({
+                user_program_enrollment.program: {
+                    'in_progress': course_in_progress,
+                    'passed': course_pass_count,
+                    'not_started': course_not_started
+                }
+            })
+            program_grades.update({user_program_enrollment.program: program_grade / no_of_courses})
+            programs.update({user_program_enrollment.program: courses})
 
-        issued = False
-        if no_of_courses == course_pass_count and course_pass_count:
-            issued = True
-            ProgramGeneratedCertificate.create_user_certificate(
-                user,
-                user_program_enrollment.program,
-                issued
-            )
-        else:
-            ProgramGeneratedCertificate.create_user_certificate(
-                user,
-                user_program_enrollment.program,
-                issued
-            )
-        program_course_states.update({
-            user_program_enrollment.program: {
-                'in_progress': course_in_progress,
-                'passed': course_pass_count,
-                'not_started': course_not_started
-            }
-        })
-        program_grades.update({user_program_enrollment.program: program_grade / no_of_courses})
-        programs.update({user_program_enrollment.program: courses})
-
-    # get user certificate for program
-    user_program_certificates = ProgramGeneratedCertificate.objects.filter(user=user, issued=True)
+        # get user certificate for program
+        user_program_certificates = ProgramGeneratedCertificate.objects.filter(user=user, issued=True)
 
     context = {
         'enrollment_message': enrollment_message,
@@ -915,11 +921,6 @@ def dashboard(request):
         'show_program_listing': ProgramsApiConfig.current().show_program_listing,
         'disable_courseware_js': True,
         'display_course_modes_on_dashboard': enable_verified_certificates and display_course_modes_on_dashboard,
-        'programs': programs,
-        'user_program_grades': program_grades,
-        'user_course_grades': course_grades,
-        'user_program_certificates': user_program_certificates,
-        'program_course_states': program_course_states,
     }
 
     ecommerce_service = EcommerceService()
@@ -928,6 +929,18 @@ def dashboard(request):
             'use_ecommerce_payment_flow': True,
             'ecommerce_payment_page': ecommerce_service.payment_page_url(),
         })
+
+    if settings.FEATURES['ENABLE_MICRO_MASTERS']:
+        context.update({
+            'programs': programs,
+            'user_program_grades': program_grades,
+            'user_course_grades': course_grades,
+            'user_program_certificates': user_program_certificates,
+            'program_course_states': program_course_states,
+        })
+        response = render_to_response('course_program_dashboard.html', context)
+        set_user_info_cookie(response, request)
+        return response
 
     response = render_to_response('dashboard.html', context)
     set_user_info_cookie(response, request)

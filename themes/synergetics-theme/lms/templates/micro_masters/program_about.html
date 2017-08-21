@@ -233,7 +233,7 @@ from openedx.core.djangolib.markup import HTML, Text
             <div class="start-program-btn">
               <div role="group" aria-label="Program purchase and email options">
                 % if user_is_enrolled:
-                  <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">Start the Program</a>
+                  <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="btn btn-cta one-click-purchase-btn">View the Program</a>
                 % else:
                   <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_buy', args=str(program.id))}" class="btn btn-cta one-click-purchase-btn">${_("Pursue the Program ({currency_symbol}{program_price})").format(program_price=program.price,currency_symbol=currency[1]) | h}</a>
                 % endif
@@ -254,14 +254,14 @@ from openedx.core.djangolib.markup import HTML, Text
                     <span class="instructor-org">${teacher.institution.name}</span>
                 </p>
               </li>
-            %endfor          
+            % endfor
             </ul>
         </section>
         <section class="separator-top why-this-program">
           <div class="view-certificate">
             <div class="certificate">
               <a href="${program.sample_certificate_pdf.url}" class="img-link">
-                <img src="${program.sample_certificate_pdf.url}" alt="certificate">
+                <img src="${static.url('images/certificate.png')}" alt="certificate">
               </a>
               <a href="${program.sample_certificate_pdf.url}" target="_blank">View a Sample MicroMasters Program Certificate</a>
             </div>

@@ -1,6 +1,13 @@
-__author__ = 'DRC Systems'
-
 from django.contrib import admin
+from django.contrib.admin.actions import delete_selected as django_delete_selected
+from django.contrib import messages
+from django.contrib.admin.utils import get_deleted_objects, model_ngettext
+from django.core.exceptions import PermissionDenied
+from django.db import router
+from django.utils.encoding import force_text
+from django.utils.translation import ugettext as _
+from django.forms import SelectMultiple, Textarea
+from django.db import models
 
 from .models import (
     Subject, Language,
@@ -10,6 +17,42 @@ from .models import (
     ProgramGeneratedCertificate,
     ProgramCouponRedemption, ProgramOrder # need to remove
 )
+from .program_reindex import remove_program_elasticsearch
+
+
+def delete_selected(modeladmin, request, queryset):
+
+    opts = modeladmin.model._meta
+
+    if not modeladmin.has_delete_permission(request):
+        raise PermissionDenied
+
+    using = router.db_for_write(modeladmin.model)
+
+    # Populate deletable_objects, a data structure of all related objects that
+    # will also be deleted.
+    deletable_objects, model_count, perms_needed, protected = get_deleted_objects(
+        queryset, opts, request.user, modeladmin.admin_site, using)
+
+    # The user has already confirmed the deletion.
+    # Do the deletion and return a None to display the change list view again.
+    if request.POST.get('post'):
+        if perms_needed:
+            raise PermissionDenied
+        n = queryset.count()
+        if n:
+            for obj in queryset:
+                obj_display = force_text(obj)
+                modeladmin.log_deletion(request, obj, obj_display)
+                remove_program_elasticsearch(program_id=obj.id)
+            queryset.delete()
+            modeladmin.message_user(request, _("Successfully deleted %(count)d %(items)s.") % {
+                "count": n, "items": model_ngettext(modeladmin.opts, n)
+            }, messages.SUCCESS)
+        # Return None to display the change list page again.
+        return None
+    else:
+        return django_delete_selected(modeladmin, request, queryset)
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -67,10 +110,20 @@ class ProgramAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'average_length', 'effort', 'image_tag']
     list_filter = ['language__name', 'subject__name', 'institution__name']
     search_fields = ['name']
+    actions = [delete_selected]
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': SelectMultiple(attrs={'size': '10'})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 25, 'cols': 100})},
+    }
 
     class Meta:
         verbose_name = "Program"
         verbose_name_plural = "Programs"
+
+    def delete_model(modeladmin, request, obj):
+        remove_program_elasticsearch(program_id=obj.id)
+        obj.delete()
 
 admin.site.register(Program, ProgramAdmin)
 

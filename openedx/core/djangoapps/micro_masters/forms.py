@@ -4,8 +4,8 @@ from .models import (
     Program, Subject,
     ProgramCoupon, Language,
     ProgramEnrollment, Institution,
-    Instructor, ProgramEnrollment,
-    ProgramCertificateSignatories
+    Instructor, ProgramCertificateSignatories,
+    ProgramCouponRedemption, ProgramGeneratedCertificate
 )
 
 
@@ -14,8 +14,8 @@ class ProgramForm(forms.ModelForm):
     class Meta:
         model = Program
         widgets = {
-            'start': forms.DateInput(attrs={'class': 'datepicker'}),
-            'end': forms.DateInput(attrs={'class': 'datepicker'}),
+            'start': forms.DateInput(),
+            'end': forms.HiddenInput(),
         }
         fields = [
             'name',
@@ -50,6 +50,10 @@ class SubjectForm(forms.ModelForm):
 
 class LanguageForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(LanguageForm, self).__init__(*args, **kwargs)
+        self.fields['code'].required = True
+
     class Meta:
         model = Language
         fields = [
@@ -70,6 +74,11 @@ class InstitutionForm(forms.ModelForm):
 
 
 class InstructorForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(InstructorForm, self).__init__(*args, **kwargs)
+        for key in self.fields:
+            self.fields[key].required = True
 
     class Meta:
         model = Instructor
@@ -102,4 +111,36 @@ class ProgramCertificateSignatoriesForm(forms.ModelForm):
             'title',
             'institution',
             'signature_image',
+        ]
+
+
+class ProgramEnrollmentForm(forms.ModelForm):
+
+    class Meta:
+        model = ProgramEnrollment
+        fields = [
+            'user',
+            'program',
+            'is_active'
+        ]
+
+
+class ProgramCouponRedemptionForm(forms.ModelForm):
+
+    class Meta:
+        model = ProgramCouponRedemption
+        fields = [
+            'user',
+            'coupon'
+        ]
+
+
+class ProgramGeneratedCertificateForm(forms.ModelForm):
+
+    class Meta:
+        model = ProgramGeneratedCertificate
+        fields = [
+            'program',
+            'user',
+            'issued'
         ]

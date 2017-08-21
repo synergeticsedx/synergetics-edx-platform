@@ -1,7 +1,8 @@
 <%inherit file="../admin_dashboard_base.html" />
 <%namespace name='static' file='../../static_content.html'/>
 <%!
-from django.core.urlresolvers import reverse
+  from django.core.urlresolvers import reverse
+  from django.conf import settings
 %>
 
 <%block name="content">
@@ -27,13 +28,18 @@ from django.core.urlresolvers import reverse
       <div id="course_revenue" class="demo-placeholder"></div>
     </div>
 
-    <div class="clearfix"></div>    
+    <div class="clearfix"></div>
+    % if settings.FEATURES['ENABLE_MICRO_MASTERS']:
+        <%include file="program_revenue_report.html"/>
+    % endif
   </div>
 </%block>
 
 <%block name="js_extra">
-  <script type="text/javascript" src="${static.url('admin_dash/js/highcharts.js')}"></script>
-  <script type="text/javascript" src="${static.url('admin_dash/js/exporting.js')}"></script>
+  % if not settings.FEATURES['ENABLE_MICRO_MASTERS']:
+    <script type="text/javascript" src="${static.url('admin_dash/js/highcharts.js')}"></script>
+    <script type="text/javascript" src="${static.url('admin_dash/js/exporting.js')}"></script>
+  % endif
   <script type="text/javascript">
 
     Highcharts.setOptions({
@@ -104,10 +110,11 @@ from django.core.urlresolvers import reverse
         },
         series: [{
             name: 'Revenue',
-            data: eval("${revenue_list}"),
+            data: eval("${course_revenue_list}"),
             maxPointWidth: 50
         }]
     });
+
 
   </script>
 </%block>

@@ -4,9 +4,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 from django.db import transaction
-from django.db.models import Sum
 from django.http import JsonResponse
-from django.http import Http404
 from django.core.exceptions import (
     NON_FIELD_ERRORS,
     ValidationError,
@@ -18,7 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 
 from opaque_keys.edx.keys import CourseKey
 from xmodule.modulestore import ModuleStoreEnum
@@ -35,7 +33,6 @@ from openedx.core.djangoapps.user_api.errors import (
 )
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
-from lms.djangoapps.grades.new.course_grade import CourseGradeFactory
 from student.models import CourseEnrollment
 from student.views import create_account_with_params
 from student_account.views import _local_server_get
@@ -72,7 +69,8 @@ from .helpers import (
     get_program_coupons,
     validate_program_coupon_details,
     get_programe_price,
-    program_price_update
+    program_price_update,
+    get_programe_using_id
 )
 from .utils import get_last_month
 from .decorators import site_administrator_only, site_manager
@@ -80,13 +78,19 @@ from openedx.core.djangoapps.micro_masters.models import (
     ProgramCoupon, Program,
     ProgramEnrollment, Subject,
     Language, Instructor,
-    Institution, ProgramCertificateSignatories
+    Institution, ProgramCertificateSignatories,
+    ProgramOrder, ProgramGeneratedCertificate,
+    ProgramCouponRedemption
 )
 from openedx.core.djangoapps.micro_masters.forms import (
     ProgramForm, SubjectForm,
     LanguageForm, InstructorForm,
-    InstitutionForm, ProgramCertificateSignatoriesForm
+    InstitutionForm, ProgramCertificateSignatoriesForm,
+    ProgramEnrollmentForm, ProgramGeneratedCertificateForm,
+    ProgramCouponRedemptionForm
 )
+from openedx.core.djangoapps.micro_masters.program_reindex import remove_program_elasticsearch
+
 
 STATIC_PAGES = {'About': 'about',
                 'Faq': 'faq',
@@ -126,7 +130,6 @@ def show_dashboard(request):
             'visitors': visitors,
             'content_viewers': content_viewers
         }
-
     }
     return render_to_response("admin_dash/insights/traffic.html", context)
 
@@ -235,40 +238,62 @@ def revenue_report(request):
         ('11', 0),
         ('12', 0)
     ])
-    revenue_dict = OrderedDict()
+    course_revenue_dict = OrderedDict()
+    program_revenue_dict = OrderedDict()
     course_list = []
-    single_paid_courses = PaidCourseRegistration.objects.filter(
-        status='purchased')
-    multiple_paid_courses = CourseRegCodeItem.objects.filter(
-        status='purchased')
+    program_list = []
+    single_paid_courses = PaidCourseRegistration.objects.filter(status='purchased')
+    multiple_paid_courses = CourseRegCodeItem.objects.filter(status='purchased')
+    paid_programs = ProgramOrder.objects.filter(status='purchased')
     for course in single_paid_courses:
         course_price = float(course.unit_cost)
         month_wise_report[str(course.fulfilled_time.month)] += course_price
-        if course.course_id in revenue_dict:
-            revenue_dict[course.course_id] += course_price
+        if course.course_id in course_revenue_dict:
+            course_revenue_dict[course.course_id] += course_price
         else:
-            revenue_dict[course.course_id] = course_price
+            course_revenue_dict[course.course_id] = course_price
 
     for course in multiple_paid_courses:
         course_price = float(course.qty * course.unit_cost)
         month_wise_report[str(course.fulfilled_time.month)] += course_price
-        if course.course_id in revenue_dict:
-            revenue_dict[course.course_id] += course_price
+        if course.course_id in course_revenue_dict:
+            course_revenue_dict[course.course_id] += course_price
         else:
-            revenue_dict[course.course_id] = course_price
+            course_revenue_dict[course.course_id] = course_price
 
-    revenue_list = revenue_dict.values()
-    for course in revenue_dict.keys():
+    course_revenue_list = course_revenue_dict.values()
+    for course in course_revenue_dict.keys():
         course_overview = get_course_overview(course)
-        course_name = str(
-            course_overview.display_name) if course_overview is not None else str(course)
+        course_name = str(course_overview.display_name) if course_overview is not None else str(course)
         course_list.append(course_name)
 
     context = {
         'month_wise_report': month_wise_report,
         'course_list': course_list,
-        'revenue_list': revenue_list
+        'course_revenue_list': course_revenue_list,
     }
+
+    if settings.FEATURES['ENABLE_MICRO_MASTERS']:
+        for program in paid_programs:
+            program_price = float(program.discounted_price) if program.discount_applied else float(program.item_price)
+            month_wise_report[str(program.purchase_time.month)] += program_price
+            if program.program.id in program_revenue_dict:
+                program_revenue_dict[program.program.id] += program_price
+            else:
+                program_revenue_dict[program.program.id] = program_price
+
+        program_revenue_list = program_revenue_dict.values()
+        for program in program_revenue_dict.keys():
+            program = get_programe_using_id(program)
+            program_name = str(program.name)
+            program_list.append(program_name)
+
+        context.update({
+            'month_wise_report': month_wise_report,
+            'program_list': program_list,
+            'program_revenue_list': program_revenue_list
+        })
+
     return render_to_response("admin_dash/insights/revenue_report.html", context)
 
 
@@ -938,8 +963,8 @@ def show_programs(request):
     Display all the programs.
     """
     PROGRAM_DISPLAY_HEADER = ['Program', 'Average Length', 'Effort', 'Total Enrollments',
-                             'Start Date', 'End Date', 'Price', 'Delete?']
-    NO_SORT_COLUMNS = ['Delete?']
+                             'Start Date', 'End Date', 'Price', 'Reindex All', 'Delete?']
+    NO_SORT_COLUMNS = ['Delete?', 'Reindex All']
     context = {}
     program_details = []
     programs_list = get_num_programs()
@@ -953,6 +978,7 @@ def show_programs(request):
         details['program_start'] = program.start.strftime("%d/%m/%Y") if program.start is not None else ''
         details['program_end'] = program.end.strftime("%d/%m/%Y") if program.end is not None else ''
         details['price'] = get_programe_price(program)
+        details['re_index'] = 'Reindex'
         details['program_id'] = program.id
         program_details.append(details)
     context['program_details'] = program_details
@@ -965,9 +991,9 @@ def show_programs(request):
 @site_administrator_only
 def create_program(request, template_name='admin_dash/management/programs_create_form.html'):
     form = ProgramForm(request.POST or None, request.FILES or None)
+    form = Program.set_start_and_end_date(form)
     if form.is_valid():
-        program = form.save(commit=False)
-        program.save()
+        form.save()
         return redirect(reverse('show-programs'))
     return render_to_response(template_name, {'form': form})
 
@@ -977,10 +1003,15 @@ def create_program(request, template_name='admin_dash/management/programs_create
 def update_program(request, pk, template_name='admin_dash/management/programs_create_form.html'):
     program = get_object_or_404(Program, pk=pk)
     form = ProgramForm(request.POST or None, instance=program)
+    form = program.set_start_and_end_date(form)
     if form.is_valid():
         form.save()
         return redirect(reverse('show-programs'))
-    return render_to_response(template_name, {'form': form})
+    context = {
+        'form': form,
+        'program': program
+    }
+    return render_to_response(template_name, context)
 
 
 @login_required
@@ -988,6 +1019,7 @@ def update_program(request, pk, template_name='admin_dash/management/programs_cr
 def program_delete(request, pk):
     program = get_object_or_404(Program, pk=pk)
     program.delete()
+    remove_program_elasticsearch(program_id=pk)
     return redirect(reverse('show-programs'))
 
 
@@ -1260,3 +1292,71 @@ def delete_signatories(request, pk):
     signatories = get_object_or_404(ProgramCertificateSignatories, pk=pk)
     signatories.delete()
     return redirect(reverse('show-signatories'))
+
+
+@login_required
+@site_administrator_only
+def program_enrollment(request):
+    """
+    Display all the program enrollment.
+    """
+    PROGRAM_ENROLLMENT_DISPLAY_HEADER = ['User', 'Program', 'Active']
+    NO_SORT_COLUMNS = []
+    program_enrollments = ProgramEnrollment.objects.all()
+    context = {}
+    program_enrollment_details = []
+    for program_enrollment in program_enrollments:
+        details = OrderedDict()
+        details['program_enrollment_user'] = program_enrollment.user.username
+        details['program_enrollment_program'] = program_enrollment.program.name
+        details['program_enrollment_active'] = program_enrollment.is_active
+        program_enrollment_details.append(details)
+    context['program_enrollment_details'] = program_enrollment_details
+    context['program_enrollment_headers'] = PROGRAM_ENROLLMENT_DISPLAY_HEADER
+    context['no_sort_columns'] = NO_SORT_COLUMNS
+    return render_to_response('admin_dash/management/program_enrollment_form.html', context)
+
+
+@login_required
+@site_administrator_only
+def program_coupon_redemption(request):
+    """
+    Display all the program_coupon_redemption.
+    """
+    PROGRAM_COUPON_REDEMPTION_DISPLAY_HEADER = ['User', 'Coupon']
+    NO_SORT_COLUMNS = []
+    program_coupon_redemptions = ProgramCouponRedemption.objects.all()
+    context = {}
+    program_coupon_redemption_details = []
+    for program_coupon_redemption in program_coupon_redemptions:
+        details = OrderedDict()
+        details['program_coupon_redemption_user'] = program_coupon_redemption.user.username
+        details['program_coupon_redemption_coupon'] = program_coupon_redemption.coupon.code
+        program_coupon_redemption_details.append(details)
+    context['program_coupon_redemption_details'] = program_coupon_redemption_details
+    context['program_coupon_redemption_headers'] = PROGRAM_COUPON_REDEMPTION_DISPLAY_HEADER
+    context['no_sort_columns'] = NO_SORT_COLUMNS
+    return render_to_response('admin_dash/management/program_coupon_redemption_form.html', context)
+
+
+@login_required
+@site_administrator_only
+def program_generated_certificate(request):
+    """
+    Display all the program_generated_certificate.
+    """
+    PROGRAM_GENERATED_CERTIFICATE_DISPLAY_HEADER = ['User', 'Program', 'issued']
+    NO_SORT_COLUMNS = []
+    program_generated_certificates = ProgramGeneratedCertificate.objects.all()
+    context = {}
+    program_generated_certificate_details = []
+    for program_generated_certificate in program_generated_certificates:
+        details = OrderedDict()
+        details['program_generated_certificate_user'] = program_generated_certificate.user.username
+        details['program_generated_certificate_program'] = program_generated_certificate.program.name
+        details['program_generated_certificate_issued'] = program_generated_certificate.issued
+        program_generated_certificate_details.append(details)
+    context['program_generated_certificate_details'] = program_generated_certificate_details
+    context['program_generated_certificate_headers'] = PROGRAM_GENERATED_CERTIFICATE_DISPLAY_HEADER
+    context['no_sort_columns'] = NO_SORT_COLUMNS
+    return render_to_response('admin_dash/management/program_generated_certificate_form.html', context)

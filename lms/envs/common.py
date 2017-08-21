@@ -2175,6 +2175,9 @@ INSTALLED_APPS = (
 
     # for storing singleton objects
     'solo',
+
+    # for course notify Management command
+    'course_start_notify',
 )
 
 # Migrations which are not in the standard module "migrations"
@@ -3060,3 +3063,11 @@ DOC_LINK_BASE_URL = None
 ############## Settings for the Enterprise App ######################
 
 ENTERPRISE_ENROLLMENT_API_URL = LMS_ROOT_URL + "/api/enrollment/v1/"
+
+############## Settings for Course Start Notification ######################
+
+COURSE_START_NOTIFY_DAY = 2
+
+############## Settings for Enable MicroMasters Program ######################
+
+FEATURES['ENABLE_MICRO_MASTERS'] = False

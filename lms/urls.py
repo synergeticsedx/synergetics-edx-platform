@@ -965,9 +965,10 @@ if settings.FEATURES.get('ENABLE_FINANCIAL_ASSISTANCE_FORM'):
         )
     )
 
-urlpatterns += patterns('',
-    url(r'^programs/', include('openedx.core.djangoapps.micro_masters.urls')),
-)
+if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+    urlpatterns += patterns('',
+        url(r'^programs/', include('openedx.core.djangoapps.micro_masters.urls')),
+    )
 
 urlpatterns += (
     url(r'^leaderboard/$', 'leaderboard.views.show_leaderboard', name='leaderboard'),

@@ -22,6 +22,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" type="image/x-icon" href="${static.url(static.get_value('favicon_path', settings.FAVICON_PATH))}" />
     <title>${settings.PLATFORM_NAME} | Administration</title>
 
     <!-- Bootstrap -->
@@ -90,18 +91,25 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
                     <ul class="nav child_menu">
                       <li><a href="/site-administration/student-details/">Users</a></li>
                       <li><a href="/site-administration/display-courses/">Courses</a></li>
-                      <li><a href="${reverse('show-programs')}">Programs</a></li>
-                      <li><a href="${reverse('show-subjects')}">Programs Subjects</a></li>
-                      <li><a href="${reverse('show-language')}">Programs Language</a></li>
-                      <li><a href="${reverse('show-instructor')}">Programs Instructor</a></li>
-                      <li><a href="${reverse('show-institution')}">Programs Institution</a></li>
-                      <li><a href="${reverse('show-signatories')}">Program Certificate Signatories</a></li>
+                      % if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+                        <li><a href="${reverse('show-programs')}">Programs</a></li>
+                        <li><a href="${reverse('show-subjects')}">Programs Subjects</a></li>
+                        <li><a href="${reverse('show-language')}">Programs Language</a></li>
+                        <li><a href="${reverse('show-instructor')}">Programs Instructor</a></li>
+                        <li><a href="${reverse('show-institution')}">Programs Institution</a></li>
+                        <li><a href="${reverse('show-signatories')}">Program Certificate Signatories</a></li>
+                        <li><a href="${reverse('program-enrollment')}">Programs Enrollment</a></li>
+                        <li><a href="${reverse('program-coupon-redemption')}">Programs Coupon Redemption</a></li>
+                        <li><a href="${reverse('program-generated-certificate')}">Programs Generated Certificate</a></li>
+                      % endif
                     </ul>
                   </li>
                   <li><a><i class="fa fa-gift"></i>Offers <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="/site-administration/view-offers/">Course Coupon</a></li>
-                      <li><a href="/site-administration/program-offers/">Program Coupon</a></li>
+                      % if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+                        <li><a href="/site-administration/program-offers/">Program Coupon</a></li>
+                      % endif 
                     </ul>
                   </li>
                   % endif

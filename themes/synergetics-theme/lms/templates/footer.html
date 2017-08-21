@@ -22,18 +22,20 @@
           <div class="footer-row">
                 <div class="column-1">
                     <div class="logo"><a href="/">
-                      <img src="${static.url('images/logo.png')}" alt=""></a>
+                      <img src="${static.url('images/footer-logo.png')}" alt=""></a>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et lobortis diam vestibulum eget varius id, vulputate et mi. Nullam feugiat, diam quis interdum varius </p>
+                    <p>Creating &amp; Delivering Value Propositions thru Customer Focused Solutions, Products &amp; Services.</p>
                     
                 </div>
                 <div class="column-1">
                   <h4>Categories</h4>
+                  % if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
                     <ul class="">
                       % for subject in subjects[:4]:
                         <li><a href="/courses?category=${subject}">${subject}</a></li>
                       % endfor
                     </ul>
+                  % endif
                 </div>
                 <div class="column-1">
                   <h4>Quick Links</h4>
@@ -50,7 +52,7 @@
                         <div class="contact-slide"><i class="fa fa-phone"></i>91.22.61488900/11/23</div>
                         <!-- <div class="contact-slide"><i class="fa fa-fax"></i>(11) 123 444 555</div> -->
                         <div class="contact-slide">
-                          <a href="mailto:info@synergetics-india.com"><i class="fa fa-envelope-o"></i>info@gmail.com</a>
+                          <a href="mailto:info@synergetics-india.com"><i class="fa fa-envelope-o"></i>Info@synergetics-india.com</a>
                         </div>
                     </div>
                 </div>
@@ -61,20 +63,21 @@
       <div class="footer-container">
           <div class="coyp-right">Copyright &copy; ${settings.COPYRIGHT_YEAR} ${settings.PLATFORM_NAME}.</div>
 
-            <div class="static-links">
+<!--             <div class="static-links">
               <ul>
                 <li><a href="/privacy">Privacy Policy</a></li>
                 <li><a href="/tos">Terms of Service</a></li>
                 <li><a href="/honor">Honor Code</a></li>
               </ul>
             </div>
+-->
 
             <div class="social-media">
               <ul>
-                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa fa-skype"></i></a></li>
-                    <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                    <li><a href="https://www.facebook.com/1Synergetics/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/synergetics1" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-youtube"></i></a></li>
                 </ul>
             </div>
         </div>

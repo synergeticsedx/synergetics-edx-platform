@@ -111,7 +111,7 @@ class Language(TimeStampedModel):
     Model for storing language.
     """
     name = models.CharField(max_length=200, unique=True)
-    code = models.CharField(max_length=20, blank=True, null=True)
+    code = models.CharField(max_length=20)
 
     class Meta:
         app_label = 'micro_masters'
@@ -155,11 +155,11 @@ class Instructor(TimeStampedModel):
     """
     Model for storing Instructor.
     """
-    name = models.CharField(max_length=200, null=True, blank=True)
-    designation = models.CharField(max_length=200, null=True, blank=True)
+    name = models.CharField(max_length=200)
+    designation = models.CharField(max_length=200)
     profile_image = models.ImageField(
         max_length=200, upload_to=content_file_name)
-    institution = models.ForeignKey(Institution, null=True, blank=True)
+    institution = models.ForeignKey(Institution)
 
     def image_tag(self):
         return u'<img src="%s" width="50" height="50" />' % self.profile_image.url
@@ -222,7 +222,10 @@ class Program(TimeStampedModel):
     name = models.CharField(max_length=200, unique=True)
     start = models.DateField(null=True)
     end = models.DateField(null=True, blank=True)
-    short_description = models.TextField(null=True, blank=True)
+    short_description = models.TextField(
+        max_length=150,
+        help_text="Appears on the program about page. Limit to ~150 characters"
+    )
     price = models.IntegerField()
     banner_image = models.ImageField(
         max_length=200, upload_to=content_file_name)
@@ -242,11 +245,13 @@ class Program(TimeStampedModel):
         help_text="e.g. 8-10 hours per week, per course"
     )
     language = models.ForeignKey(
-        Language, related_name='program_language', null=True, blank=True)
+        Language, related_name='program_language'
+    )
     video_transcripts = models.ForeignKey(
-        Language, related_name='transcript_language', null=True, blank=True)
-    subject = models.ForeignKey(Subject, null=True, blank=True)
-    institution = models.ForeignKey(Institution, null=True, blank=True)
+        Language, related_name='transcript_language'
+    )
+    subject = models.ForeignKey(Subject)
+    institution = models.ForeignKey(Institution)
     instructors = models.ManyToManyField(Instructor)
     courses = models.ManyToManyField(Courses)
 
@@ -285,6 +290,19 @@ class Program(TimeStampedModel):
                         # return True
         return course_programs_details
 
+    @classmethod
+    def set_start_and_end_date(cls, form):
+        """
+        Set start and end date
+        """
+        try:
+            start, end = form.data['start'].split(' To ')[0], form.data['start'].split(' To ')[1]
+            form.data['start'] = start
+            form.data['end'] = end
+            return form
+        except Exception, e:
+            return form
+
 
 class ProgramOrder(TimeStampedModel):
     """Storing Program Order"""
@@ -302,6 +320,7 @@ class ProgramOrder(TimeStampedModel):
         null=True,
         default=0
     )
+    discount_applied = models.BooleanField(default=0)
     status = models.CharField(
         max_length=32, default='initiate', choices=ORDER_STATUSES)
     processor_response_json = CompressedTextField(
@@ -626,6 +645,7 @@ class ProgramCouponRedemption(TimeStampedModel):
             coupon_redemption.save()
             discount_price = cls.get_discount_price(coupon.percentage_discount, order.item_price)
             order.discounted_price = discount_price
+            order.discount_applied = True
             order.save()
             log.info(
                 u"Discount generated for user %s against order id '%s'",

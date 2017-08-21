@@ -570,7 +570,7 @@ $light-border: 1px solid $gray-l5;
       }
 
       span {
-        @include margin-right(-$baseline);
+        // @include margin-right(-$baseline);
         display: inline-block;
         padding: ($baseline*0.45) 0;
 

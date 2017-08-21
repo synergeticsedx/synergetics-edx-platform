@@ -21,6 +21,8 @@ button, input, select, textarea {
 .error-message{
     color: red;
 }
+.x_panel .x_title a h2 span.fa-times{display: block;}
+
 </style>
 <div class="student_details" id="student_details">
     <div class="x_panel">
@@ -66,15 +68,43 @@ button, input, select, textarea {
 <script src="${static.url('admin_dash/js/buttons.print.min.js')}"></script>
 <script src="${static.url('admin_dash/js/bootstrap-editable.js')}"></script>
 <script src="${static.url('admin_dash/js/configuration.js')}"></script>
-<script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "1900:2012",
-      // You can put more options here.
+% if program:
+    <script>
 
+      // $(function() {
+      //   $( ".datepicker" ).datepicker({
+      //     changeMonth: true,
+      //     changeYear: true,
+      //     yearRange: "2013:2030",
+      //     // You can put more options here.
+
+      //   });
+      // });
+
+    $(function() {
+        $('input[name="start"]').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD',
+                separator: " To ",
+            },
+            startDate: '${program.start}',
+            endDate: '${program.end if program.end else program.start}'
+        });
     });
-  });
-</script>
+
+    </script>
+% else:
+    <script>
+
+    $(function() {
+        $('input[name="start"]').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD',
+                separator: " To ",
+            }
+        });
+    });
+
+    </script>
+% endif
 </%block>

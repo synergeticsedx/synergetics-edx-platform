@@ -631,7 +631,8 @@ class CourseAboutSearchIndexer(object):
         # Broad exception handler to protect around and report problems with indexing
         try:
             searcher.index(cls.DISCOVERY_DOCUMENT_TYPE, [course_info])
-            index_course_programs(course_id)
+            if settings.FEATURES['ENABLE_MICRO_MASTERS']:
+                index_course_programs(course_id)
         except:  # pylint: disable=bare-except
             log.exception(
                 "Course discovery indexing error encountered, course discovery index may be out of date %s",

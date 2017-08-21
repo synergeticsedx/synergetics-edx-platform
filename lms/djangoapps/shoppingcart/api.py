@@ -34,6 +34,7 @@ def order_history(user, **kwargs):
                 if (course_org_filter and course_org_filter == order_item_course_id.org) or \
                         (course_org_filter is None and order_item_course_id.org not in org_filter_out_set):
                     order_history_list.append({
+                        'order_id': order_item.order.id,
                         'number': order_item.order.id,
                         'title': order_title,
                         'price': float(order_item.order.total_cost),

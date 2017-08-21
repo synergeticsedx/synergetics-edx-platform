@@ -639,7 +639,10 @@ def course_about(request, course_id):
         overview = CourseOverview.get_from_id(course.id)
 
         # check course contain any program
-        course_in_program = Program.course_has_part_of_programs(course_id)
+        if settings.FEATURES['ENABLE_MICRO_MASTERS']:
+            course_in_program = Program.course_has_part_of_programs(course_id)
+        else:
+            course_in_program = {}
 
         context = {
             'course': course,

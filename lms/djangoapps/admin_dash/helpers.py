@@ -242,3 +242,11 @@ def program_price_update(program_id, program_price):
             'success': False,
             'message': 'Invalid Key'
         }
+
+
+def get_programe_using_id(program_id):
+    try:
+        program = Program.objects.get(id=program_id)
+        return program
+    except ObjectDoesNotExist:
+        return None

@@ -436,7 +436,8 @@ def account_settings_context(request):
     year_of_birth_options = [(unicode(year), unicode(year)) for year in UserProfile.VALID_YEARS]
     try:
         user_orders = order_history(user)
-        user_orders += programs_order_history(user)
+        if settings.FEATURES['ENABLE_MICRO_MASTERS']:
+            user_orders += programs_order_history(user)
     except:  # pylint: disable=bare-except
         log.exception('Error fetching order history from Otto.')
         # Return empty order list as account settings page expect a list and

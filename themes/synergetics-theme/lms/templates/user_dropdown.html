@@ -15,9 +15,6 @@ from django.conf import settings
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 %>
 
-<%
-    protocol = 'https://' if request.is_secure() else 'http://'
-%>
 
 % if uses_pattern_library:
     <div class="wrapper-user-menu dropdown-menu-container logged-in js-header-user-menu">
@@ -37,6 +34,10 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
             </button>
             <ul class="dropdown-menu list-divided is-hidden" id="${_("Usermenu")}" tabindex="-1">
                 <%block name="navigation_dropdown_menu_links" >
+                    <%
+                        protocol = 'https://' if request.is_secure() else 'http://'
+                        cms_url = protocol + settings.CMS_BASE
+                    %>
                     <li class="dropdown-item item has-block-link"><a href="${reverse('dashboard')}" role="menuitem" class="action dropdown-menuitem">${_("Dashboard")}</a></li>
                     <li class="dropdown-item item has-block-link"><a href="${reverse('learner_profile', kwargs={'username': self.real_user.username})}" role="menuitem" class="action dropdown-menuitem">${_("Profile")}</a></li>
                     <li class="dropdown-item item has-block-link"><a href="${reverse('account_settings')}" role="menuitem" class="action dropdown-menuitem">${_("Account")}</a></li>
@@ -45,7 +46,7 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
                         </li>
                         % if user.is_superuser:
                             <li>
-                              <a href="${protocol + settings.CMS_BASE}">
+                              <a href="${cms_url}">
                                 <span>Go to Studio</span>
                               </a>
                             </li>

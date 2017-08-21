@@ -30,7 +30,11 @@
                 <thead>
                     <tr>
                     % for heading in program_headers:
-                    <th class="${'nosort' if heading in no_sort_columns else ''}">${heading}</th>
+                        % if heading == 'Reindex All':
+                            <th class="${'nosort' if heading in no_sort_columns else ''}"><a href="${reverse('reindex-all-programs')}" >${heading}</a></th>
+                        % else:
+                            <th class="${'nosort' if heading in no_sort_columns else ''}">${heading}</th>
+                        % endif
                     % endfor
                     </tr>
                 </thead>
@@ -47,6 +51,10 @@
                                     <td>
                                         ${program[details]}
                                         <span id="${program['program_id']}_currency"> ${settings.PAID_COURSE_REGISTRATION_CURRENCY[0].upper() if program[details] != 'FREE' else ''}</span>
+                                    </td>
+                                % elif details == 're_index':
+                                    <td>
+                                        <a href="${reverse('reindex-program', args=[program['program_id']])}" class="update-link">${program[details]}</a>
                                     </td>
                                 % else:
                                     % if details != 'program_id':
@@ -116,20 +124,20 @@
         key = value.dataset.pk
         program_price_id = key.replace(/[^a-zA-Z0-9]/g, "")
         program_class = value.classList[0]
-        value.setAttribute('id',program_price_id)
+        value.setAttribute('id', program_price_id)
         $('#'+program_price_id).editable({
             success: function(response, newValue) {
                 currencySpan = document.getElementById(response.program_id+"_currency")
-                currencySpan.innerHTML = (newValue > 0) ? " USD" : ""
+                currencySpan.innerHTML = (newValue > 0) ? " INR" : ""
             }
         })
     });
-
-    $(".delete-program").click(function(){
+    
+    $("#program_list").on("click", ".delete-program", function(){
         var deleteUrl = this.childNodes[0].dataset.deleteUrl;
         $("#confirm-delete-program").attr("href", deleteUrl);
         $("#deleteprogramModal").modal("show");
-    });
+    })
 
     $("#program_list #deleteprogramModal .close-modal").click(function(){
         if(!(($(".delete-program-error .error").hasClass("hidden")))){
@@ -139,14 +147,3 @@
     });
 </script>
 </%block>
- <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "1900:2012",
-      // You can put more options here.
-
-    });
-  });
-</script>

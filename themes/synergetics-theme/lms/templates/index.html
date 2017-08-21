@@ -17,6 +17,9 @@ from django.conf import settings
 
     <meta name="description" content="">
     <meta name="author" content="">
+
+    <link rel="icon" type="image/x-icon" href="${static.url(static.get_value('favicon_path', settings.FAVICON_PATH))}" />
+
     <title>${settings.PLATFORM_NAME}</title>
     <!-- Bootstrap Core CSS -->
     <!-- Custom CSS -->
@@ -104,71 +107,66 @@ from django.conf import settings
                     </div>
                 </div>
             </div>
-            <div class="online-program">
-                <div class="container">
-                    <h2>Our Programs</h2>
-                    <div class="row">
-                      %for program in programs[:settings.HOMEPAGE_COURSE_MAX]:
-                        <% price = program.price %>
-                        <a href="${reverse('program_about', args=str(program.id))}">
-                          <div class="col-md-4 col-sm-6">
-                            <div class="course-box">
-                              <div class="img">
-                                  <img src="${program.banner_image.url}" alt="${program.name}">
+            % if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+                <div class="online-program">
+                    <div class="container">
+                        <h2>Our Programs</h2>
+                        <div class="row">
+                          %for program in programs[:settings.HOMEPAGE_COURSE_MAX]:
+                            <% price = program.price %>
+                            <a href="${reverse('program_about', args=str(program.id))}">
+                              <div class="col-md-4 col-sm-6">
+                                <div class="course-box">
+                                  <div class="img">
+                                      <img src="${program.banner_image.url}" alt="${program.name}">
+                                  </div>
+                                  <div class="details">
+                                    <div class="name">${program.name}</div>
+                                      <%
+                                        if program.start is not None:
+                                            course_date_string = program.start.strftime('%b %d')
+                                        else:
+                                            course_date_string = ''
+                                      %>
+                                      <p><i class="fa fa-calendar"></i>${course_date_string} onwards</p>
+                                      % if price != 0:
+                                        <div class="price">${settings.PAID_COURSE_REGISTRATION_CURRENCY[1]}${price}</div>
+                                      % else:
+                                        <div class="price">Free</div>
+                                      %endif
+                                  </div>
+                                </div>
                               </div>
-                              <div class="details">
-                                <div class="name">${program.name}</div>
-                                  <%
-                                    if program.start is not None:
-                                        course_date_string = program.start.strftime('%b %d')
-                                    else:
-                                        course_date_string = ''
-                                  %>
-                                  <p><i class="fa fa-calendar"></i>${course_date_string} onwards</p>
-                                  % if price != 0:
-                                    <div class="price">${settings.PAID_COURSE_REGISTRATION_CURRENCY[1]}${price}</div>
-                                  % else:
-                                    <div class="price">Free</div>
-                                  %endif
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      %endfor
+                            </a>
+                          %endfor
+                        </div>
                     </div>
                 </div>
-            </div>
+            % endif
             <section class="preparation">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Maximize your preparation</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                        <h2>How to Succeed with Learning Strategy</h2>
                     </div>
+ 
                     <div class="preparation-view">
-                      <div class="row">
+                       <div class="row">
                           <div class="col-sm-6">
                               <div class="preparation-box">
-                                    <div class="icon">
-                                      <img src="${static.url('images/learn-icon.png')}" alt="">
-                                    </div>
-                                    <div class="course-name">Highest Quality Content by IIM Alumni  <span>CONTENT</span></div>
-                                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
+                                    <p>Having taken massive strides in the field of technology training, We aim at addressing all short-term and long-term learning needs of the clients, having a wealth of experience and the right tools to implement the programs. We develop e/Online-learning solutions for companies that need to align their learning needs, infrastructure as well as available budgets.</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                               <div class="preparation-box">
-                                    <div class="icon">
-                                      <img src="${static.url('images/save-timeIcon.png')}" alt="">
-                                    </div>
-                                    <div class="course-name">Detailed Analysis with Performance Indicators<span>ANALYSIS</span>
-                                    </div>
-                                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
+                                    <p>We cover the full gamut of Road map services ranging from content to technology. Services include Learning Consulting, e/Online-Learning custom content Development – Conceptualization of e/online-Learning units, Instructional Design and development of most suited content.</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
+
                 </div>
             </section>
+<!-- 
             <section class="graph-view" style="display: none;">
                 <div class="container">
                     <div class="row">
@@ -193,6 +191,7 @@ from django.conf import settings
                     </div>
                 </div>
             </section>
+-->
             <div class="course-benefits">
               <div class="container">
                   <div class="row">
@@ -212,9 +211,10 @@ from django.conf import settings
                     </div>
                 </div>
             </div>
+ 
             <div class="testimonials">
               <div class="container">
-                  <h2>Our students say it best</h2>
+                  <!-- <h2>Our students say it best</h2> -->
                     <div class="testimonials-slider">
                       % for testimonial in testimonials:
                         <div class="item">
@@ -226,6 +226,7 @@ from django.conf import settings
                     </div>
                 </div>
             </div>
+
             
         </div>
 <!-- 

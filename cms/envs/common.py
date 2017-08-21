@@ -1247,3 +1247,7 @@ RETRY_ACTIVATION_EMAIL_TIMEOUT = 0.5
 USER_TASKS_MAX_AGE = timedelta(days=7)
 
 MEDIA_URL = '/media/'
+
+############## Settings for Enable MicroMasters Program ######################
+
+FEATURES['ENABLE_MICRO_MASTERS'] = False

@@ -118,7 +118,7 @@
     });
     table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container()));
 
-    $(".delete-institution").click(function(){
+    $("#institution_list").on("click", ".delete-institution", function(){
         var deleteUrl = this.childNodes[0].dataset.deleteUrl;
         $("#confirm-delete-institution").attr("href", deleteUrl);
         $("#deleteinstitutionModal").modal("show");
