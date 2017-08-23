@@ -236,25 +236,25 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     context['testimonials'] = testimonials
 
-    statistical = StatisticalCounter.objects.get()
-
-    statistical_data = serializers.serialize("python", [StatisticalCounter.objects.get()])
-
-    certified_users = 0
-    if statistical.certified_users:
-        certified_users = LeaderBoard.objects.filter(has_passed=True).count()
-
-    statistical_details = {}
-    statistical_details.update({
-        'fields': statistical_data[0].get('fields'),
-        'values': {
-            'number_of_courses': get_num_courses() if statistical.number_of_courses else 0,
-            'number_of_instructors': get_num_instructors() if statistical.number_of_instructors else 0,
-            'number_of_paths': len(get_num_programs()) if statistical.number_of_paths else 0,
-            'students_registered': get_num_students() if statistical.students_registered else 0,
-            'certified_users': certified_users
-        }
-    })
+    try:
+        statistical = StatisticalCounter.objects.get()
+        statistical_data = serializers.serialize("python", [StatisticalCounter.objects.get()])
+        certified_users = 0
+        if statistical.certified_users:
+            certified_users = LeaderBoard.objects.filter(has_passed=True).count()
+        statistical_details = {}
+        statistical_details.update({
+            'fields': statistical_data[0].get('fields'),
+            'values': {
+                'number_of_courses': get_num_courses() if statistical.number_of_courses else 0,
+                'number_of_instructors': get_num_instructors() if statistical.number_of_instructors else 0,
+                'number_of_paths': len(get_num_programs()) if statistical.number_of_paths else 0,
+                'students_registered': get_num_students() if statistical.students_registered else 0,
+                'certified_users': certified_users
+            }
+        })
+    except Exception, e:
+        statistical_details = {}
 
     if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
         programs = Program.objects.filter()
@@ -847,7 +847,7 @@ def dashboard(request):
                 courses += [course_enroll]
                 if course_enroll in course_enrollments:
                     course_enrollments.remove(course_enroll)
-                course_point = course_grades.get(course.course_key, '')
+                course_point = course_grades.get(course.course_key, {})
                 program_grade += course_point.get('points', 0.0)
                 if course_point.get('points'):
                     try:
