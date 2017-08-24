@@ -1,0 +1,627 @@
+.forum-nav-thread.never-read .forum-nav-thread-link{
+    border-left: 3px solid #e74c3c;
+    color: #e74c3c;
+    outline-color: #e74c3c;
+}
+.forum-nav-thread .forum-nav-thread-link{
+    color: rgba(231, 76, 60, 0.7);
+    outline-color: #e74c3c;
+}
+.xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .secondary-controls .quality-control.active,
+.xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .control:active, .xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .is-active.control, .xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .active.control{
+    color: #e74c3c;
+}
+.xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .secondary-controls .menu-container .menu li.is-active .speed-option, .xmodule_display.xmodule_VideoModule .video .video-wrapper .video-controls .secondary-controls .menu-container .menu li.is-active .control-lang{
+    border-left: 2px solid #e74c3c;
+    color: #e74c3c;
+}
+.confirm-enrollment button[type="submit"],
+.shopping-cart .col-two .col-2 button[type="submit"]{
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+    border: 1px solid #e74c3c;
+    border-bottom: 1px solid #e74c3c;
+    text-shadow: 0 1px 0 rgba(231, 76, 60, 0.5);
+}
+.shopping-cart .discount button[type="submit"]:hover,
+.shopping-cart .col-two .col-2 button[type="submit"]:hover{
+    background: rgba(231, 76, 60, 0.7);
+}
+.shopping-cart a.blue,
+.shopping-cart .user-data .data-input .three-col .col-3 button.btn-remove{
+    background: #e74c3c;
+}
+.shopping-cart .user-data .data-input .three-col .col-2 .numbers-row button{
+    color: #e74c3c;
+}
+.shopping-cart .bordered-bar h2 span .blue-link, .shopping-cart .bordered-bar .home>header .title>.heading-group p span .blue-link, .home>header .title>.heading-group .shopping-cart .bordered-bar p span .blue-link, .shopping-cart .bordered-bar section.outside-app h1 span .blue-link, section.outside-app .shopping-cart .bordered-bar h1 span .blue-link{
+    color: rgba(231, 76, 60, 0.7);
+}
+.shopping-cart a.blue:hover,
+.empty-cart a.blue:hover{
+    color: #fff;
+    background: rgba(231, 76, 60, 0.7);
+}
+.instructor-dashboard-wrapper-2 section.idash-section#membership .member-lists-management .auth-list-container .member-list-widget input[type="button"].add{
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.5);
+    border: 1px solid #e74c3c;
+    cursor: pointer;
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+}
+.instructor-dashboard-wrapper-2 section.idash-section#membership .member-lists-management .auth-list-container .member-list-widget input[type="button"].add:hover:not(:disabled){
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.7);
+    background-color: #e74c3c;
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,rgba(231, 76, 60, 0.7), 50%,rgba(231, 76, 60, 0.7) 50%,rgba(231, 76, 60, 0.7) 100%);
+}
+.instructor-dashboard-wrapper-2 section.idash-section#membership .member-lists-management .auth-list-container .member-list-widget input[type="button"].add:active:not(:disabled), .instructor-dashboard-wrapper-2 section.idash-section#membership .member-lists-management .auth-list-container .member-list-widget input[type="button"].add:focus:not(:disabled) {
+    border: 1px solid #e74c3c;
+    box-shadow: inset 0 0 8px 4px #e74c3c, inset 0 0 8px 4px #e74c3c;
+    outline: #e74c3c;
+}
+.instructor-dashboard-wrapper-2 .file-download-link a{
+    color: rgba(231, 76, 60, 0.7);
+}
+.btn-blue, .view-teams .action-primary, .instructor-dashboard-wrapper-2 .btn-blue{
+    box-shadow: 0 2px 1px 0 #e74c3c;
+    background: #e74c3c;
+    color: #fff;  
+}
+.instructor-dashboard-wrapper-2 .customBrowseBtn .file-browse .browse{
+    border-color: #e74c3c;
+    background: #e74c3c;
+    border: 1px solid #e74c3c;
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.7);
+}
+.xmodule_display.xmodule_VideoModule .video .subtitles a {color:rgba(231, 76, 60, 0.7);}
+.wrapper-account-settings .wrapper-header .account-nav button.active{
+    border-bottom: 4px solid rgba(231, 76, 60, 0.7) !important;
+    outline: rgba(231, 76, 60, 0.7);
+}
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong {
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+    border: 1px solid #e74c3c;
+    border-bottom: 1px solid #e74c3c;
+}
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta strong:hover:not(:disabled){
+    background-color: rgba(231, 76, 60, 0.5);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.5) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+}
+.header-global .user .dropdown{outline-color: rgba(231, 76, 60, 0.7);}
+.dropdown-menu-container .menu-button{
+    outline-color: rgba(231, 76, 60, 0.7); 
+    box-shadow: none;
+}
+.dropdown-menu-container .menu-button:hover{
+    background-color: transparent;
+    background-image: none;
+}
+.dropdown-menu-container .dropdown-menu .dropdown-item a{
+    color: rgba(231, 76, 60, 0.7);
+    outline-color: rgba(231, 76, 60, 0.7);
+}
+.dropdown-menu-container .dropdown-menu .dropdown-item a:hover, .dropdown-menu-container .dropdown-menu .dropdown-item a:active, .dropdown-menu-container .dropdown-menu .dropdown-item a:focus{
+    color: #161616;
+}
+#footer-openedx .colophon ol, #footer-openedx .colophon ul{
+    margin-left: 0;
+}
+.discussion.inline-discussion .new-post-article .add-post-cancel{color: #e74c3c;}
+.xmodule_display.xmodule_HtmlModule a:link, .xmodule_display.xmodule_HtmlModule a:visited, .xmodule_display.xmodule_HtmlModule a:hover, .xmodule_display.xmodule_HtmlModule div.info-wrapper section.handouts ol li div.hitarea:hover+h4, div.info-wrapper section.handouts ol li .xmodule_display.xmodule_HtmlModule div.hitarea:hover+h4, .xmodule_display.xmodule_HtmlModule div.info-wrapper section.handouts ol li div.hitarea:focus+h4, div.info-wrapper section.handouts ol li .xmodule_display.xmodule_HtmlModule div.hitarea:focus+h4, .xmodule_display.xmodule_HtmlModule a:active, .xmodule_display.xmodule_HtmlModule a:focus{
+    color: rgba(231, 76, 60, 0.7);
+    outline: rgba(231, 76, 60, 0.7);
+}
+.xmodule_display.xmodule_HtmlModule a:hover{text-decoration: underline !important;}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label:hover, .xmodule_display.xmodule_ConditionalModule div.problem .xmodule_display.xmodule_CapaModule .choicegroup label:hover, .xmodule_display.xmodule_ConditionalModule div.problem .xmodule_display.xmodule_CapaModule .choicetextgroup label:hover{
+    border: 2px solid #e74c3c;
+}
+.light-button:hover:not(:disabled), div.history-controls input[type="submit"]:hover:not(:disabled), a.light-button:hover:not(:disabled), div.info-wrapper section.handouts ol li div.hitarea:hover+h4.light-button:not(:disabled), div.info-wrapper section.handouts ol li div.hitarea:focus+h4.light-button:not(:disabled), .gray-button:hover:not(:disabled), input[type="reset"]:hover:not(:disabled), input[type="submit"]:hover:not(:disabled), input[type="button"]:hover:not(:disabled), button:hover:not(:disabled), .button:hover:not(:disabled), .xmodule_display.xmodule_LTIModule div.lti .wrapper-lti-link .lti-link .link_lti_new_window:hover:not(:disabled){
+    border-color: transparent;
+
+}
+.search-results .search-load-next{border: 2px solid #e74c3c;}
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .file-upload-form .action-submit,
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .form-submit,
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-management-nav .action-create,
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-management .message .action-create{
+    border: 1px solid #e74c3c;
+    box-shadow: inset 0 1px 0 0 #e74c3c;
+    background-color: #e74c3c;
+    background-image: linear-gradient(#e74c3c,#e74c3c);
+}
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .file-upload-form .action-submit:hover:not(:disabled),
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .file-upload-form .action-submit:active:not(:disabled), .instructor-dashboard-wrapper-2 section.idash-section#cohort_management .file-upload-form .action-submit:focus:not(:disabled),
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .form-submit:hover:not(:disabled),
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .form-submit:active:not(:disabled), .instructor-dashboard-wrapper-2 section.idash-section#cohort_management .form-submit:focus:not(:disabled),
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-management-nav .action-create:hover:not(:disabled),
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-management-nav .action-create:active:not(:disabled), .instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-management-nav .action-create:focus:not(:disabled),
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-management .message .action-create:hover:not(:disabled){
+    border: 1px solid rgba(231, 76, 60, 0.7);
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.7);
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(rgba(231, 76, 60, 0.7),rgba(231, 76, 60, 0.7));
+}
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .wrapper-tabs .tab .toggle-button,
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .toggle-cohort-management-secondary, .instructor-dashboard-wrapper-2 section.idash-section#cohort_management .toggle-cohort-management-discussions{
+    color: #e74c3c;
+}
+.field-label .field-input:checked+.field-input-label, .field-label .wrapper-custom-select:checked+.field-input-label, .field-label .field-radio:checked+.field-input-label, .field-label.is-active, .field-label.is-selected,
+.instructor-dashboard-wrapper-2 section.idash-section#cohort_management .cohort-discussions-nav .cohorted-text,
+.discussion .actions-dropdown .action-list-item.is-checked:hover, .discussion .actions-dropdown .action-list-item.is-checked:focus{
+    color: rgba(231, 76, 60, 0.7)
+}
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses:active:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses:focus:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register:active:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register:focus:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart:active:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart:focus:not(:disabled),
+input[type="submit"]:active:not(:disabled), input[type="submit"]:focus:not(:disabled), input[type="button"]:active:not(:disabled), input[type="button"]:focus:not(:disabled), button:active:not(:disabled), button:focus:not(:disabled), .button:active:not(:disabled), .button:focus:not(:disabled){
+    box-shadow: inset 0 0 20px 0 #e74c3c;
+}
+.dashboard .my-courses .course .details .enter-course.archived:focus,
+.dashboard .my-courses .course .details .enter-course.archived:hover{
+    color: #fff;
+    outline: #e74c3c;
+}
+.wrapper-footer footer#footer-openedx a:hover, .wrapper-footer footer#footer-openedx a:focus, .wrapper-footer footer#footer-openedx a:active{
+    border-bottom: 1px dotted #e74c3c;
+}
+.wrapper-footer footer#footer-openedx .colophon .nav-colophon li a{
+    outline: #e74c3c;
+}
+.discussion-module .btn, .wmd-prompt-dialog .btn, .discussion-module .btn-brand, .wmd-prompt-dialog .btn-brand{
+    border-color: #e74c3c;
+    background: #fff;
+    color: #e74c3c;
+}
+.discussion-module .btn:hover, .wmd-prompt-dialog .btn:hover, .discussion-module .btn-brand:hover, .wmd-prompt-dialog .btn-brand:hover, .discussion-module .btn:active, .wmd-prompt-dialog .btn:active, .discussion-module .btn-brand:active, .wmd-prompt-dialog .btn-brand:active, .discussion-module .btn:focus, .wmd-prompt-dialog .btn:focus, .discussion-module .btn-brand:focus, .wmd-prompt-dialog .btn-brand:focus{
+    border-color: #e74c3c !important;
+    background-color: #e74c3c !important;
+    outline: none;
+}
+body.view-wiki *:focus{outline-color: rgba(231, 76, 60, 0.7);}
+body.view-wiki a{color: rgba(231, 76, 60, 0.7);}
+body.view-wiki a:hover, body.view-wiki a:focus{color: #e74c3c;}
+section.wiki .breadcrumb li a{color: rgba(231, 76, 60, 0.7);}
+section.wiki .nav-tabs li.active a{color: rgba(231, 76, 60, 0.7);}
+section.wiki .nav-tabs a{color: rgba(231, 76, 60, 0.7);}
+body.view-wiki input[type="text"]:focus{border-color: rgba(231, 76, 60, 0.7);box-shadow: 0 0 6px 0 rgba(0,128,0,0.4), inset 0 0 4px 0 rgba(0,0,0,0.15);}
+section.wiki .btn.btn-primary{border-color: rgba(231, 76, 60, 0.7);box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.7);background-color: rgba(231, 76, 60, 0.7);background-image: linear-gradient(rgba(231, 76, 60, 0.7),#e74c3c);text-shadow: 0 1px 0 rgba(231, 76, 60, 0.7);}
+section.wiki .btn.btn-primary:hover:not(:disabled){box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.5);  background-color: rgba(231, 76, 60, 0.7);background-image: linear-gradient(rgba(231, 76, 60, 0.5),rgba(231, 76, 60, 0.7));}
+section.wiki .btn.btn-primary:active:not(:disabled), section.wiki .btn.btn-primary:focus:not(:disabled){border: 1px solid rgba(231, 76, 60, 0.7);box-shadow: inset 0 0 8px 4px #e74c3c, inset 0 0 8px 4px #e74c3c;}
+section.wiki #cheatsheetLink{color: rgba(231, 76, 60, 0.7);}
+div.page-header-main button,
+.discussion.inline-discussion .inline-thread .forum-nav-bar .all-posts-btn{
+    box-shadow:none;
+    color: #e74c3c;
+    outline: #e74c3c;
+}
+div.page-header-main button:hover,
+.discussion.inline-discussion .inline-thread .forum-nav-bar .all-posts-btn:hover{
+    background-image: none;
+    background-color: transparent;
+    color: #e74c3c;
+}
+.btn,
+div.page-header-secondary button{
+    border-color: #e74c3c;
+    background: #fff;
+    color: #e74c3c;
+}
+.btn:hover,
+.btn:focus,
+div.page-header-secondary button:hover,
+div.page-header-secondary button:focus{
+    border-color: #e74c3c;
+    background: #e74c3c;
+    outline: none;
+    color: #fff;
+}
+div.page-header-secondary button:active{
+    border-color: #e74c3c;
+    color: #e74c3c;
+    background: rgba(255, 91, 33, 0.2);
+}
+.field-input:focus, .wrapper-custom-select:focus, .field-input.is-active, .is-active.wrapper-custom-select, .field-select:focus, .field-select.is-active, .field-textarea:focus, .field-textarea.is-active{
+    border-color: rgba(231, 76, 60, 0.5);
+    box-shadow: 0 0 6px 0 rgba(231, 76, 60, 0.7), inset 0 0 4px 0 rgba(0,0,0,0.15);
+    outline: none;
+}
+.discussion .post-label.post-label-following,
+.view-discussion-home .helpgrid-row-participation .fa-star{
+    color: #e74c3c;
+}
+.forum-new-post-form .post-type-input:checked+.post-type-label, .edit-post-form .post-type-input:checked+.post-type-label{
+    background-color: #e74c3c;
+}
+.forum-edit-post-form-wrapper .post-type-input:focus+.post-type-label, 
+.forum-new-post-form .post-type-input:focus+.post-type-label{
+    box-shadow: 1px 1px #e74c3c inset, 0 0 2px 2px #e74c3c;
+}
+.discussion .action-button{box-shadow: none;}
+.discussion .action-button.action-follow:hover, .discussion .action-button.action-follow:focus,
+.discussion .action-button.action-more:hover, .discussion .action-button.action-more:focus,
+.discussion .action-button.action-vote:hover, .discussion .action-button.action-vote:focus{
+    background-color: transparent;
+    background-image: none;
+}
+.discussion .action-button.action-follow.is-checked .action-icon, .discussion .action-button.action-follow:hover .action-icon, .discussion .action-button.action-follow:focus .action-icon{
+    background-color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+.discussion .action-button.action-follow:hover, .discussion .action-button.action-follow:focus{
+    border-color: #e74c3c;
+}
+.discussion .action-button.action-follow .action-label{color: #e74c3c;}
+.discussion .actions-dropdown .action-list-item:hover, .discussion .actions-dropdown .action-list-item:focus{
+    background-color: transparent;
+    background-image: none;
+    color: #e74c3c;
+}
+.discussion .actions-dropdown .action-list-item{box-shadow: none;}
+.header-global .nav-global li a, .header-global .nav-global div a, .header-global .nav-global li a:hover, .header-global .nav-global li a:focus, .header-global .nav-global li a:active, .header-global .nav-global div a:hover, .header-global .nav-global div a:focus, .header-global .nav-global div a:active {
+    color: rgba(231, 76, 60, 0.7);
+    background: transparent;
+}
+.header-global .nav-courseware li .btn, .header-global .nav-courseware div .btn, .login .form-actions button[type="submit"], .register .form-actions button[type="submit"], .passwordreset .form-actions button[type="submit"], #forgot-password-modal #password-reset .form-actions button[type="submit"], .view-survey .action-primary {
+    box-shadow: 0 2px 1px 0 #e74c3c;
+    background: #e74c3c;
+}
+.header-global .nav-courseware li .btn:hover, .header-global .nav-courseware div .btn:hover, .login .form-actions button[type="submit"]:hover, .register .form-actions button[type="submit"]:hover, .passwordreset .form-actions button[type="submit"]:hover, #forgot-password-modal #password-reset .form-actions button[type="submit"]:hover, .view-survey .action-primary:hover, .header-global .nav-courseware li .btn:active, .header-global .nav-courseware div .btn:active, .login .form-actions button[type="submit"]:active, .register .form-actions button[type="submit"]:active, .passwordreset .form-actions button[type="submit"]:active, #forgot-password-modal #password-reset .form-actions button[type="submit"]:active, .view-survey .action-primary:active, .header-global .nav-courseware li .btn:focus, .header-global .nav-courseware div .btn:focus, .login .form-actions button[type="submit"]:focus, .register .form-actions button[type="submit"]:focus, .passwordreset .form-actions button[type="submit"]:focus, #forgot-password-modal #password-reset .form-actions button[type="submit"]:focus, .view-survey .action-primary:focus {
+    background: rgba(231, 76, 60, 0.7);
+}
+.header-global .nav-courseware li .btn:focus, .header-global .nav-courseware div .btn:focus, .login .form-actions button[type="submit"]:focus, .register .form-actions button[type="submit"]:focus, .passwordreset .form-actions button[type="submit"]:focus, #forgot-password-modal #password-reset .form-actions button[type="submit"]:focus, .view-survey .action-primary:focus {
+    box-shadow: 0 0 6px 0 rgba(231, 76, 60, 0.7);
+}
+.home>header .title .course-search .search-input:focus {
+    border-color: rgba(231, 76, 60, 0.7);
+}
+.home>header .title .course-search .search-button {
+    border: 2px solid rgba(231, 76, 60, 0.7);
+    background: rgba(231, 76, 60, 0.7);
+}
+.home>header .title .course-search .search-button:hover, .home>header .title .course-search .search-button:focus {
+    background: rgba(231, 76, 60, 0.5);
+}
+.courses-container .courses .course {
+    border-bottom: 3px solid #e74c3c;
+}
+.courses-container .courses .course .course-info .course-title {
+    color: rgba(231, 76, 60, 0.7);
+}
+.courses-container .courses .course .course-image .cover-image .learn-more {
+    border-color: rgba(231, 76, 60, 0.7);
+    background: rgba(231, 76, 60, 0.7);
+}
+.wrapper-footer footer#footer-openedx .colophon .nav-colophon li a:hover, .wrapper-footer footer#footer-openedx .colophon .nav-colophon li a:focus, .wrapper-footer footer#footer-openedx .colophon .nav-colophon li a:active {
+    color: rgba(231, 76, 60, 0.7);
+}
+.wrapper-footer footer#footer-openedx a {
+    color: rgba(231, 76, 60, 0.7);
+}
+.find-courses .discovery-input:focus {
+    border-color: #e74c3c;
+}
+.find-courses .discovery-submit {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.7);
+}
+.find-courses .discovery-submit:hover, .find-courses .discovery-submit:focus {
+    background: rgba(231, 76, 60, 0.5);
+}
+.find-courses .search-facets .facet-option:hover, .find-courses .search-facets .facet-option:focus {
+    background: rgba(231, 76, 60, 0.7);
+}
+.find-courses .filters .clear-filters {
+    color: #e74c3c;
+}
+.find-courses .loading-spinner {
+    background: #e74c3c;
+}
+.view-howitworks .nav-global-01 a, .view-courses .nav-global-02 a, .view-schools .nav-global-03 a, .view-register .nav-global-04 a {
+    color: rgba(231, 76, 60, 0.7) !important;
+}
+.btn-brand {
+    border-color: #e74c3c;
+    background: #e74c3c;
+}
+.register aside .btn-login h3.title {
+    color: #FFFFFF;
+}
+.btn-brand:hover, .btn-brand.is-hovered, .btn-brand:focus, .btn-brand.is-focused {
+    border-color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.7);
+}
+.register aside .btn-login .btn-login-action {
+    color: #FFFFFF;
+}
+.register aside .btn-login .btn-login-action:hover,
+.register aside .btn-login .btn-login-action:focus {
+    border: 1px solid #e74c3c;
+    background: rgba(231, 76, 60, 0.7);
+}
+.login-register .nav-btn:hover, .login-register .nav-btn:focus,
+.login-register .action-primary {
+    box-shadow: 0 2px 1px 0 #e74c3c;
+    background: #e74c3c;
+}
+.login-register .action-primary:focus,
+.login-register .action-primary:hover {
+    background: rgba(231, 76, 60, 0.7);
+}
+.login-register .nav-btn {
+    border: 1px solid rgba(231, 76, 60, 0.7);
+    color: rgba(231, 76, 60, 0.7);
+}
+.login-register .form-field .field-link, .financial-assistance-wrapper .financial-assistance-form .form-field .field-link {
+    color: rgba(231, 76, 60, 0.7);
+}
+textarea:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="tel"]:focus {
+    border-color: rgba(231, 76, 60, 0.5);
+    box-shadow: 0 0 6px 0 rgba(231, 76, 60, 0.7), inset 0 0 4px 0 rgba(0,0,0,0.15);
+    outline: none;
+}
+.view-register .introduction header .title .title-super, .view-login .introduction header .title .title-super, .view-passwordreset .introduction header .title .title-super {
+    color: rgba(231, 76, 60, 0.7);
+}
+.login form .field.is-focused label, .register form .field.is-focused label, .passwordreset form .field.is-focused label, #forgot-password-modal #password-reset form .field.is-focused label {
+    color: rgba(231, 76, 60, 0.7);
+}
+.login form .field.is-focused .tip, .register form .field.is-focused .tip, .passwordreset form .field.is-focused .tip, #forgot-password-modal #password-reset form .field.is-focused .tip {
+    color: rgba(231, 76, 60, 0.7);
+}
+.login a:link, .login a:visited, .login a:hover, .login a:active, .login a:focus, .register a:link, .register a:visited, .register a:hover, .register a:active, .register a:focus, .passwordreset a:link, .passwordreset a:visited, .passwordreset a:hover, .passwordreset a:active, .passwordreset a:focus, #forgot-password-modal #password-reset a:link, #forgot-password-modal #password-reset a:visited, #forgot-password-modal #password-reset a:hover, #forgot-password-modal #password-reset a:active, #forgot-password-modal #password-reset a:focus {
+    color: rgba(231, 76, 60, 0.7);
+}
+p a:hover, p a:focus, p a:visited:hover, p a:visited:focus {
+    color: #e74c3c;
+}
+input[type="submit"], input[type="button"], button, .button {
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+    border: 1px solid #e74c3c;
+    border-bottom: 1px solid #e74c3c;    
+    outline: #e74c3c;
+}
+input[type="submit"]:hover:not(:disabled), input[type="button"]:hover:not(:disabled), button:hover:not(:disabled), .button:hover:not(:disabled) {
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+    color: #fff;
+}
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses:hover:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register:hover:not(:disabled), .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart:hover:not(:disabled) {
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);
+}
+.course-info header.course-profile .intro-inner-wrapper .intro .main-cta>a.find-courses, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.register, .course-info header.course-profile .intro-inner-wrapper .intro .main-cta a.add-to-cart {
+    box-shadow: inset 0 1px 0 0 rgba(231, 76, 60, 0.5);
+    background-color: rgba(231, 76, 60, 0.7);
+    background-image: linear-gradient(to bottom,rgba(231, 76, 60, 0.7) 0%,#e74c3c 50%,#e74c3c 50%,#e74c3c 100%);   
+    border: 1px solid #e74c3c;
+    border-bottom: 1px solid #e74c3c;    
+    outline: #e74c3c;
+}
+p a, p a:visited {
+    color: rgba(231, 76, 60, 0.7);
+}
+a, a:visited {
+    color: rgba(231, 76, 60, 0.7);
+}
+a:hover, a:focus, a:visited:hover, a:visited:focus {
+    color: #e74c3c;
+}
+.header-global .user .dropdown-menu li>a {
+    color: rgba(231, 76, 60, 0.7);
+    outline-color: #e74c3c;
+}
+.search-bar .search-button, .search-bar .cancel-button, .search-bar .search-button:hover, .search-bar .cancel-button:hover {
+    background: rgba(231, 76, 60, 0.7);
+}
+.search-bar .search-button:hover, .search-bar .search-button:focus, .search-bar .search-button:active, .search-bar .cancel-button:hover, .search-bar .cancel-button:focus, .search-bar .cancel-button:active, .search-bar .search-button:hover:hover, .search-bar .search-button:hover:focus, .search-bar .search-button:hover:active, .search-bar .cancel-button:hover:hover, .search-bar .cancel-button:hover:focus, .search-bar .cancel-button:hover:active {
+    background: #e74c3c;
+}
+.empty-dashboard-message a {
+    background-color: #e74c3c;
+    border: 1px solid #e74c3c;
+    color: #fff;
+}
+.empty-dashboard-message a:hover, .empty-dashboard-message a:focus {
+    background: rgba(231, 76, 60, 0.7); 
+    color: #fff;
+}
+.dashboard .my-courses .course .details .enter-course {
+    color: #e74c3c;
+}
+.verification-process .report-receipt-provider .provider-buttons-logos .complete-order button:hover, .dashboard .my-courses .course .details .enter-course:hover, .dashboard .my-courses .course .wrapper-messages-primary .message.message-status .verification-cta .btn:hover, .dashboard .my-courses .course .wrapper-messages-primary .message.message-status .credit-action .credit-btn:hover, .btn-secondary:hover, .account-settings-sections .section .account-settings-section-body .u-field .field .u-field-link:hover, .account-settings-sections .section .account-settings-section-body .u-field .u-field-order .u-field-order-link .u-field-link:hover, .courseware-bookmarks-button .bookmarks-list-button:hover, .verification-process .report-receipt-provider .provider-buttons-logos .complete-order button:focus, .dashboard .my-courses .course .details .enter-course:focus, .dashboard .my-courses .course .wrapper-messages-primary .message.message-status .verification-cta .btn:focus, .dashboard .my-courses .course .wrapper-messages-primary .message.message-status .credit-action .credit-btn:focus, .btn-secondary:focus, .account-settings-sections .section .account-settings-section-body .u-field .field .u-field-link:focus, .account-settings-sections .section .account-settings-section-body .u-field .u-field-order .u-field-order-link .u-field-link:focus, .courseware-bookmarks-button .bookmarks-list-button:focus, .courseware-bookmarks-button .bookmarks-list-button.is-active {
+    background: #e74c3c;
+}
+.view-profile .profile-image-field .image-wrapper .u-field-upload-button {
+    color: rgba(231, 76, 60, 0.7);
+    background: rgba(231, 76, 60, 0.2);
+}
+.view-profile .profile-image-field .image-wrapper .u-field-upload-button:focus, .view-profile .profile-image-field .image-wrapper .u-field-upload-button:hover {
+    border-color: rgba(231, 76, 60, 0.7);
+}
+.u-field.mode-placeholder:hover {
+    border: 2px dashed rgba(231, 76, 60, 0.7);
+}
+.u-field.mode-placeholder:hover span {
+    color: rgba(231, 76, 60, 0.7);
+}
+.view-profile .profile-section-two-fields .u-field.mode-placeholder:hover {
+    border: 2px dashed rgba(231, 76, 60, 0.7);
+}
+.view-profile .profile-section-two-fields .u-field.mode-placeholder:hover .u-field-title, .view-profile .profile-section-two-fields .u-field.mode-placeholder:hover i {
+    color: rgba(231, 76, 60, 0.7);
+}
+.u-field.editable-toggle.mode-display:hover {
+    background-color: rgba(231, 76, 60, 0.2);
+}
+.u-field.editable-toggle.mode-display:hover .message-can-edit {
+    color: rgba(231, 76, 60, 0.7);
+}
+.wrapper-account-settings .wrapper-header .account-nav button:hover, .wrapper-account-settings .wrapper-header .account-nav button:focus {
+    border-bottom: 4px solid rgba(231, 76, 60, 0.7) !important;
+}
+.account-settings-sections .section .account-settings-section-body .u-field .field select:focus,
+.account-settings-sections .section .account-settings-section-body .u-field .field .field-input:focus {
+     outline-color: rgba(231, 76, 60, 0.7);
+}
+.account-settings-sections .section .account-settings-section-body .u-field .field .u-field-link {
+    color: rgba(231, 76, 60, 0.7);
+    border: 1px solid rgba(231, 76, 60, 0.7);
+}
+.account-settings-sections .section .account-settings-section-body .u-field .field select ~ .icon-caret-down:after {
+    border-top: 7px solid rgba(231, 76, 60, 0.7);
+}
+div.info-wrapper section.handouts ol li a {
+    color: rgba(231, 76, 60, 0.7);
+}
+.wrapper-course-material .course-tabs li a:hover, .wrapper-course-material .course-tabs div.info-wrapper section.handouts ol li div.hitarea:hover+h4, div.info-wrapper section.handouts ol .wrapper-course-material .course-tabs li div.hitarea:hover+h4, .wrapper-course-material .course-tabs div.info-wrapper section.handouts ol li div.hitarea:focus+h4, div.info-wrapper section.handouts ol .wrapper-course-material .course-tabs li div.hitarea:focus+h4, .wrapper-course-material .course-tabs li a:focus, .wrapper-course-material .course-tabs li a.active, .wrapper-course-material .course-tabs li a:visited:hover, .wrapper-course-material .course-tabs div.info-wrapper section.handouts ol li div.hitarea:hover+h4:visited, div.info-wrapper section.handouts ol .wrapper-course-material .course-tabs li div.hitarea:hover+h4:visited, .wrapper-course-material .course-tabs div.info-wrapper section.handouts ol li div.hitarea:focus+h4:visited, div.info-wrapper section.handouts ol .wrapper-course-material .course-tabs li div.hitarea:focus+h4:visited, .wrapper-course-material .course-tabs li a:visited:focus, .wrapper-course-material .course-tabs li a:visited.active {
+    color: #e74c3c;
+    border-bottom-color: #e74c3c;
+}
+.verification-process .report-receipt-provider .provider-buttons-logos .complete-order button, .dashboard .my-courses .course .details .enter-course, .dashboard .my-courses .course .wrapper-messages-primary .message.message-status .verification-cta .btn, .dashboard .my-courses .course .wrapper-messages-primary .message.message-status .credit-action .credit-btn, .btn-secondary, .dashboard .my-courses .course .details .enter-course.archived, .account-settings-sections .section .account-settings-section-body .u-field .field .u-field-link, .account-settings-sections .section .account-settings-section-body .u-field .u-field-order .u-field-order-link .u-field-link, .courseware-bookmarks-button .bookmarks-list-button {
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol li button .fa-bookmark,
+.bookmarks-results-list .bookmarks-results-list-item:before {
+    color: rgba(231, 76, 60, 0.7);
+}
+.bookmarks-results-list .bookmarks-results-list-item:hover {
+    border-color: rgba(231, 76, 60, 0.7);
+}
+.bookmarks-results-list .bookmarks-results-list-item:hover .list-item-breadcrumbtrail {
+    color: rgba(231, 76, 60, 0.7);
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.focused, .xmodule_display.xmodule_SequenceModule .sequence-nav-button:hover, .xmodule_display.xmodule_SequenceModule .sequence-nav-button:active, .xmodule_display.xmodule_SequenceModule .sequence-nav-button.active, .xmodule_display.xmodule_SequenceModule .sequence-nav button.focused, .xmodule_display.xmodule_SequenceModule .sequence-nav button:hover, .xmodule_display.xmodule_SequenceModule .sequence-nav button:active, .xmodule_display.xmodule_SequenceModule .sequence-nav button.active {
+    border-bottom: 3px solid rgba(231, 76, 60, 0.7);
+}
+.btn-link, .view-student-notes .note-group .note .wrapper-note-excerpts .note-excerpt-more-link, .view-student-notes .note-group .note .reference .wrapper-reference-content a.reference-meta, .edx-notes-wrapper .annotator-adder button:after, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-edit:before, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-delete:before, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-close:before, .edx-notes-wrapper .annotator-wrapper .annotator-editor.annotator-outer button.annotator-cancel, .view-student-notes .wrapper-tabs .tab-list .tab .tab-label, .view-student-notes .wrapper-tabs .tab-list .tab .action-close {
+    color: rgba(231, 76, 60, 0.7);
+    outline: rgba(231, 76, 60, 0.7);
+    border-color: transparent;
+}
+.btn-link:hover, .view-student-notes .note-group .note .wrapper-note-excerpts .note-excerpt-more-link:hover, .view-student-notes .note-group .note .reference .wrapper-reference-content a.reference-meta:hover, .view-student-notes .note-group .note .reference .wrapper-reference-content div.info-wrapper section.handouts ol li div.hitarea:hover+h4.reference-meta, div.info-wrapper section.handouts ol li .view-student-notes .note-group .note .reference .wrapper-reference-content div.hitarea:hover+h4.reference-meta, .view-student-notes .note-group .note .reference .wrapper-reference-content div.info-wrapper section.handouts ol li div.hitarea:focus+h4.reference-meta, div.info-wrapper section.handouts ol li .view-student-notes .note-group .note .reference .wrapper-reference-content div.hitarea:focus+h4.reference-meta, .edx-notes-wrapper .annotator-adder button:hover:after, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-edit:hover:before, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-delete:hover:before, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-close:hover:before, .edx-notes-wrapper .annotator-wrapper .annotator-editor.annotator-outer button.annotator-cancel:hover, .view-student-notes .wrapper-tabs .tab-list .tab .tab-label:hover, .view-student-notes .wrapper-tabs .tab-list .tab .action-close:hover, .btn-link:focus, .view-student-notes .note-group .note .wrapper-note-excerpts .note-excerpt-more-link:focus, .view-student-notes .note-group .note .reference .wrapper-reference-content a.reference-meta:focus, .edx-notes-wrapper .annotator-adder button:focus:after, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-edit:focus:before, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-delete:focus:before, .edx-notes-wrapper .annotator-viewer .annotator-controls .annotator-close:focus:before, .edx-notes-wrapper .annotator-wrapper .annotator-editor.annotator-outer button.annotator-cancel:focus, .view-student-notes .wrapper-tabs .tab-list .tab .tab-label:focus, .view-student-notes .wrapper-tabs .tab-list .tab .action-close:focus {
+    color: rgba(231, 76, 60, 0.7);
+}
+.course-index .accordion .course-navigation .button-chapter {
+    color: rgba(231, 76, 60, 0.7);
+}
+.xmodule_display.xmodule_CapaModule div.problem button.btn-brand:hover {
+    background-color: rgba(231, 76, 60, 0.7);
+}
+.xmodule_display.xmodule_VideoModule .video .subtitles .subtitles-menu li {
+    color: rgba(231, 76, 60, 0.7);
+}
+.btn-default {
+    color: rgba(231, 76, 60, 0.7);
+}
+.btn-default:hover, .btn-default.is-hovered, .btn-default:focus, .btn-default.is-focused {
+    color: rgba(231, 76, 60, 0.7);
+}
+.btn-default:hover, .btn-default.is-hovered, .btn-default:focus, .btn-default.is-focused {
+    border-color: rgba(231, 76, 60, 0.7);
+}
+.course-index .accordion .course-navigation .chapter-content-container .chapter-menu .menu-item.graded .menu-icon {
+    color: rgba(231, 76, 60, 0.7);
+}
+
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn {
+    background-color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.7);
+    background-image: none;
+    cursor: pointer;
+}
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:hover,
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:focus,
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:active,
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:visited{
+    background-color: rgba(231, 76, 60, 0.7);
+}
+
+
+
+.login-register .login-provider.button-oa2-facebook:hover, .financial-assistance-wrapper .financial-assistance-form .login-provider.button-oa2-facebook:hover, .login-register .login-provider.button-oa2-facebook:focus, .financial-assistance-wrapper .financial-assistance-form .login-provider.button-oa2-facebook:focus,
+.login-register .login-provider.button-oa2-google-oauth2:hover, .financial-assistance-wrapper .financial-assistance-form .login-provider.button-oa2-google-oauth2:hover, .login-register .login-provider.button-oa2-google-oauth2:focus, .financial-assistance-wrapper .financial-assistance-form .login-provider.button-oa2-google-oauth2:focus,
+.login-register .login-provider.button-oa2-linkedin-oauth2:hover, .financial-assistance-wrapper .financial-assistance-form .login-provider.button-oa2-linkedin-oauth2:hover, .login-register .login-provider.button-oa2-linkedin-oauth2:focus, .financial-assistance-wrapper .financial-assistance-form .login-provider.button-oa2-linkedin-oauth2:focus{
+    background-image: none;
+}
+.view-profile .profile-image-field .image-wrapper .u-field-remove-button{
+    color: inherit;
+    box-shadow: none;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-next:hover,
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-next:focus,
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-previous:hover,
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-previous:focus,
+.xmodule_display.xmodule_CapaModule div.problem .action .problem-action-btn:hover,
+.xmodule_display.xmodule_CapaModule div.problem .action .problem-action-btn:focus,
+.discussion-module .add_post_btn_container .new-post-btn:hover,
+.discussion-module .add_post_btn_container .new-post-btn:focus{
+    color: inherit;
+}
+div.info-wrapper section.updates div article .toggle-visibility-button{
+    box-shadow: none;
+}
+div.info-wrapper section.handouts a, div.info-wrapper section.updates div article .toggle-visibility-button{
+    color: rgba(231, 76, 60, 0.7);
+}
+div.info-wrapper section.handouts a:hover, div.info-wrapper section.updates div article .toggle-visibility-button:hover{
+    color: #e74c3c;
+}
+.course-content .bookmark-button-wrapper .btn-link:hover,
+.course-content .bookmark-button-wrapper .btn-link:focus{
+    color: #e74c3c;
+}
+.mce-listbox button, .mce-btn button, .wmd-button{
+    box-shadow: none;
+}
+.mce-listbox button:hover, .mce-listbox button:focus, .mce-btn button:hover, .mce-btn button:focus{
+    box-shadow: none;
+    background-image: none;
+    background-color: inherit;
+}
+.instructor-dashboard-content-2 .instructor-nav .nav-item .btn-link:hover, .instructor-dashboard-content-2 .instructor-nav .nav-item .btn-link:focus{
+    color: #000000;
+}
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:hover,
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:focus,
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:active,
+.dashboard .my-courses .course .wrapper-messages-primary .message.message-status.course-status-certavailable .actions-primary .action-certificate .btn:visited{
+    background-color:#e74c3c
+}
+.mce-listbox button:hover, .mce-listbox button:focus, .mce-btn button:hover, .mce-btn button:focus{
+    box-shadow: none;
+    background-image: none;
+    background-color: inherit;
+}
+.instructor-dashboard-content-2 .slickgrid .slick-cell{text-overflow: ellipsis;word-wrap: normal;white-space:pre;}
+
+
+.logo img{
+    max-height: 50px;
+}
+
+.header-global .user .trophy{float: left;}
+.header-global .user .trophy a{display: block;padding-top: 12px;padding-bottom: 11px;padding-right: 5px;}
+.find-courses .search-facets.phone-menu{z-index: 2;}
+
+.account-settings-sections .section .account-settings-section-body .u-field .field .u-field-link{
+    color: rgba(231, 76, 60, 0.7);
+    background: transparent;
+    border: none;
+}
+.account-settings-sections .section .account-settings-section-body .u-field .field .u-field-link:hover{
+    color: #e74c3c;
+    background: transparent;
+}
+.view-profile .page-content-nav .nav-item.is-active,
+.view-profile .page-content-nav .nav-item:hover, .view-profile .page-content-nav .nav-item:focus{
+    border-bottom: 4px solid #e74c3c;
+    color: #e74c3c;
+}
+.view-profile .badge-set-display .badge-display .badge-details .find-button-container{
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}

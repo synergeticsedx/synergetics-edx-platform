@@ -1,0 +1,279 @@
+@font-face {
+	font-family: SegoeUILight;
+	src: url(../fonts/segoeuil.ttf);
+}
+
+body {font-family: 'Open Sans', sans-serif;}
+*{  box-sizing:border-box; margin:0px; padding:0px; }
+*:before,*:after {box-sizing:border-box;  margin:0px; padding:0px; }
+a {text-decoration:none;}
+img { max-width:100%; }
+h2 {line-height:60px; font-size:48px; color:#3498db; font-weight:600; margin:0px; padding:0px; }
+.btn-style {display:inline-block; border:solid 1px #ffffff; border-radius:5px; color:#fff; line-height:46px; font-size:18px; color:#ffffff; font-weight:600; padding:0 28px; -moz-transition:all 0.5s ease-in-out 0s; -ms-transition:all 0.5s ease-in-out 0s; -o-transition:all 0.5s ease-in-out 0s; -webkit-transition:all 0.5s ease-in-out 0s; transition:all 0.5s ease-in-out 0s;}
+.btn-style.fill {background:#e74c3c; border:solid 1px #e74c3c; }
+.btn-style.fill:hover {background:none; border:solid 1px #fff; }
+.btn-style:hover {background:#e74c3c; border:solid 1px #e74c3c;}
+.container {width:1170px; margin:0 auto; }
+
+
+#header { width:100%;  border-bottom:solid 1px #555; padding:15px 0; position:absolute; top:0px; left:0px; width:100%; z-index:999; }
+#header .logo {padding:6px 0 0 0; float:left;}
+#header .login-btn {float:right; margin-top:30px; }
+#header .login-btn a {padding:0 30px; border:solid 1px #fff; line-height:36px; color:#fff; font-size:16px; font-weight:600; display:block; text-transform:uppercase; }
+#header .login-btn a:hover {background:#e74c3c; border:solid 1px #e74c3c; }
+#header.fiexd {position:fixed; top:0px; background:rgba(0,0,0,0.5);}
+
+.banner {position:relative; background-position:50% 50%; background-repeat:no-repeat; background-size:cover; min-height:800px; background-image:url(../images/banner-img.jpg) }
+
+.banner:after {position:absolute; top:0px; left:0px; width:100%; height:100%; content:""; background:rgba(0,0,0,0.5);}
+.banner .banner-text {position:absolute; bottom:10%; left:50%; width:100%; text-align:center; z-index:99; max-width:450px; -moz-transform:translateX(-50%); -ms-transform:translateX(-50%); -o-transform:translateX(-50%); -webkit-transform:translateX(-50%); transform:translateX(-50%); padding:0 15px; }
+.banner .banner-text h2 {display:block; text-align:center; line-height:50px; font-size:42px; color:#f1f1f3; }
+.banner .banner-text p {display:block; line-height:30px; padding:6px 0 33px 0; margin:0px; font-size:18px; color:#f1f1f3; }
+.banner .banner-text .search-box {display:block; width:100%; padding:0 50px 0 0; position:relative; margin-bottom:25px; }
+.banner .banner-text .search-box input[type="text"] {width:100%; background:#fff; height:50px; border:none; padding:15px; line-height:20px; font-size:16px; color:#666; }
+.banner .banner-text .search-box input[type="submit"] {position:absolute; top:0px; right:0px; background:url(../images/search-icon.png) no-repeat center center #e7e7e7; width:50px; height:50px; border:none; cursor: pointer;}
+.banner .banner-text .search-box input[type="submit"]:hover {background-color:#e0e0e0}
+.banner .banner-text .bottom-arrow {display:block; text-align:center; padding:46px 0 0 0;}
+
+.row {margin:0 -15px; overflow:hidden; }
+.row .col-sm-4 {float:left; width:33.33%; padding:0 15px; }
+.row .col-sm-6 {float:left; width:50%; padding:0 15px; }
+.row .col-sm-3 {float:left; width:25%; padding:0 15px; }
+.row .col-sm-5 {float:left; width:41.6667%; padding:0 15px; }
+.row .col-sm-7 {float:left; width:58.3333%; padding:0 15px; }
+.content {display:block;}
+.online-program {overflow:hidden; padding:40px 0; background:#eef3f6; }
+.online-program h2 {text-align:center; padding:20px 0 44px 0; font-family: SegoeUILight, sans-serif, Helvetica, Arial;}
+.online-program .course-box {display:block; background:#fff; margin-bottom:30px; padding-bottom:20px; }
+.online-program .course-box .img {width:100%; display:block; }
+.online-program .course-box .img img {width:100%; min-height: 200px; max-height: 200px; }
+.online-program .course-box .details {display:block; padding:0 20px; }
+.online-program .course-box .details .name {display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;min-height: 119px; max-height: 119px; overflow: hidden; border-bottom:solid 1px #e7ebed; padding:20px 0; font-size:18px; color:#4d4d4d; line-height:30px; text-align:center; margin-bottom:15px; }
+.online-program .course-box .details p {    color: #4d4d4d; display:block; line-height:24px; font-size:14px; margin:0px; text-align:center; }
+.online-program .course-box .details p .fa  {padding:0 5px 0 0;}
+.online-program .course-box .details .price {display:block; font-size:21px; color:#010101; padding:15px 0 0 0; line-height:30px; text-align:center;}
+
+
+.exam-formula {background:#f6fbfe; padding:80px 0 70px 0; }
+.exam-formula h2  {text-align:center; padding-bottom:27px;}
+.exam-formula .formula-box {background:#fff; border-bottom:solid 2px #e3d6d6; padding:28px 25px 20px 25px; display:inline-block; width:100%; margin-bottom:17px; }
+.exam-formula .formula-box.color-style1 .title {color:#f5821f;}
+.exam-formula .formula-box.color-style2 .title {color:#f51f2b;}
+.exam-formula .formula-box.color-style3 .title {color:#9c7d76;}
+.exam-formula .formula-box.color-style4 .title {color:#599eba;}
+.exam-formula .formula-box .title {display:block; line-height:50px; font-size:21px; font-weight:bold; padding:0 0 0 59px; position:relative; }
+.exam-formula .formula-box .title img {position:absolute; top:0px; left:0px; }
+.exam-formula .formula-box .text-block {float:left; width:50%; text-align:center; padding:16px 0 0 0;}
+.exam-formula .formula-box .text-block h4 {line-height:28px; text-align:center; font-size:18px; color:#333333; font-weight:600; margin:0px; padding-bottom:4px; }
+.exam-formula .formula-box .text-block p {display:inline-block; width:100%; max-width:215px; min-height:70px; font-size:16px; color:#666666; margin:0px; }
+
+.introducing-vedio {padding:70px 0 0 0; }
+.introducing-vedio h2 {text-align:center; padding:0 0 37px 0; }
+.introducing-vedio .vedio-box {max-width:885px; width:100%; margin:0 auto; }
+
+
+.course-benefits {background:url(../images/course-benefitsBg.jpg) no-repeat; background-position:50% 50%; background-size:cover; background-attachment:fixed; width:100%; padding:33px 0 35px 0; position:relative; margin:60px 0;}
+.course-benefits:after {position:absolute; top:0px; background:rgba(30,29,29,0.8); content:""; height:100%; width:100%; }
+.course-benefits .container {position:relative; z-index:9;}
+.course-benefits .benefits-box {display:block; text-align:center; }
+.course-benefits .benefits-box .count {display:block; text-align:center; line-height:50px; font-size:36px; color:#ffffff; font-weight:600;}
+.course-benefits .benefits-box p {display:block; text-align:center; margin:0px; padding:2px 0 0 0; font-size:18px; color:#ffffff; font-weight:300; line-height:30px; }
+
+.testimonials {padding:60px 0; text-align:center; }
+.testimonials h2 {text-align:center; padding-bottom:60px; }
+.testimonials .testimonials-slider { width:100%; max-width:1000px; display:inline-block;}
+.testimonials .testimonials-slider .item {padding:0 50px; }
+.testimonials .testimonials-slider .item img {display:none; }
+.testimonials .testimonials-slider p {display:block; line-height:24px; color:#4d4d4d; font-size:18px; font-style:italic; margin:0px; position:relative; padding:18px 0 0 0;}
+.testimonials .testimonials-slider p .fa {font-size:48px; color:#dbdbdb; line-height:46px; position:absolute; }
+.testimonials .testimonials-slider p .fa.fa-quote-right {bottom:-28px; right:-50px;} 
+.testimonials .testimonials-slider p .fa.fa-quote-left {top:0px; left:-50px;} 
+.testimonials .testimonials-slider .name {display:block; text-align:center; padding:14px 0 0 0; font-size:18px; color:#4d4d4d; font-style:italic; line-height:28px; }
+.testimonials .testimonials-slider .owl-thumbs {margin:59px 0 0 0;}
+.testimonials .testimonials-slider .owl-thumb-item {margin:0 8px; cursor:pointer; border:none; background:none; }
+.testimonials .testimonials-slider .owl-thumb-item img {border-radius:50%; float:left;border:solid 5px #dfdfdf; max-width:90px;min-height: 90px;}
+.testimonials .testimonials-slider .owl-thumb-item.active img {border:solid 5px #3498db;}
+
+
+.our-team {background:#3498db; padding:60px 0 46px 0; }
+.our-team h2 {color:#fff; text-align:center; }
+.our-team .member-view {padding:90px 0 170px 0; display:inline-block; width:100%; position:relative;}
+.our-team .member-view .inner-view {position:relative; display:inline-block; width:100%; }
+.our-team .member-block {width:20%; float:left; text-align:center; }
+.our-team .member-view .member-block:hover .member-info {display:block; }
+.our-team .member-view .member-block:hover .member-img .normal-img {display:none; }
+.our-team .member-view .member-block:hover .member-img .hover-img {display:block; }
+.our-team .member-view .member-block:first-child .member-info {display:block; }
+.our-team .member-view .member-block:first-child .member-img .normal-img {display:none; }
+.our-team .member-view .member-block:first-child .member-img .hover-img {display:block; }
+.our-team .member-view .member-block .member-img .normal-img {display:block;}
+.our-team .member-view .member-block .member-img .hover-img {display:none;}
+.our-team .member-block .member-img {display:block; width:100%;}
+.our-team .member-block img {max-width:100%;}
+.our-team .member-view .member-info {display:none; position:absolute; top:100%; left:0px; width:100%; min-height:170px; background:#3498db;}
+.our-team .member-info { padding:20px 0 0 0;text-align:center; width:100%; display:inline-block;}
+.our-team .member-info p {display:block; line-height:24px; font-size:16px; color:#ffffff; margin:0px; }
+.our-team .member-info .name {display:block; padding:24px 0 0 0; line-height:24px; color:#fff; font-size:16px; }
+.our-team .member-info .name span {display:block;}
+.our-team .member-viewSlider  {display:none !important;}
+
+.guidance-form {display:block; padding:60px 0 50px 0;}
+.guidance-form h2 {text-align:center;}
+.guidance-form .form-filde {padding:88px 0 0 0; }
+.guidance-form .form-filde .input-box {padding-bottom:10px; }
+.guidance-form .form-filde .input-box input {width:100%; border:solid 1px #d5d5d5; height:48px; line-height:26px; padding:10px; font-size:16px; color:#666; font-weight:300; border-radius:5px;}
+.guidance-form .form-filde .input-box .btn-style {border:none; color:#fff; font-size:18px; }
+.guidance-form .form-filde .input-box .btn-style:hover {background:#3498db; }
+
+.refer-info {background:#f6fbfe; padding:60px 0 70px 0;}
+.refer-info h2 {text-align:center; padding-bottom:64px; }
+.refer-info .col-sm-4:last-child .refer-box:after {display:none; }
+.refer-info .refer-box {text-align:center; width:100%; padding-bottom:55px; position:relative; }
+.refer-info .refer-box:after {content:""; position:absolute; top:49px; right:-46px; background:url(../images/refer-arrowRight.png) no-repeat top left; width:62px; height:26px; }
+.refer-info .refer-box .icon {display:block; padding-bottom:32px; }
+.refer-info .refer-box .icon img {display:inline-block; }
+.refer-info .refer-box .text {display:block; line-height:24px; font-size:16px; color:#666666; font-weight:600; }
+.refer-info .submit-btn {display:block; text-align:center;}
+.refer-info .submit-btn .btn-style {max-width:270px; width:100%; }
+.refer-info .submit-btn .btn-style:hover {background:#4caf79; border:solid 1px #4caf79;}
+
+.preparation {background:#f5f5f5; padding:50px 0 0 0;}
+.section-title {text-align:center; display:block;}
+.section-title h2 {padding-bottom:20px; color:#02cbf7; line-height:50px; position:relative;}
+.section-title h2:after {position:absolute; bottom:0px; left:50%; width:90px; margin-left:-45px; height:3px; background:#4d4d4d; content:"";}
+.section-title h2:before { border-left: 5px solid transparent;border-right: 5px solid transparent; border-bottom: 5px solid #4d4d4d; content:""; position:absolute; bottom:3px; left:50%; margin-left:-5px;}
+.section-title p {padding:19px 0 0 0; font-size:18px; color:#444; line-height:30px; display:inline-block; max-width:800px;}
+
+.preparation .preparation-view {padding:92px 0 42px 0;}
+.preparation .preparation-view .preparation-box {position:relative; padding:0 0 0 79px; }
+.preparation .preparation-view .preparation-box .icon {position:absolute; top:0px; left:0px; }
+.preparation .preparation-view .course-name {padding-bottom:25px; font-size:18px; color:#333; line-height:28px; font-weight:600;}
+.preparation .preparation-view .course-name span {display:block; line-height:22px; font-size:14px; }
+.preparation .preparation-view p {line-height:24px; margin:0px; min-height:168px; font-size:16px; color:#666; }
+
+#footer .footer-top {background:#1e1d1d; padding:37px 0 20px 0;}
+#footer .footer-top h4 {line-height:30px; font-size:21px; color:#ffffff; font-weight:600; margin:0px; padding:13px 0 0 0; }
+#footer .footer-top .logo {padding-bottom:30px; }
+#footer .footer-top p {display:inline-block; font-size:14px; line-height:24px; color:#cccccc; margin:0 0 22px 0; }
+#footer .footer-top ul.popular {padding-top:10px;}
+#footer .footer-top ul.popular li {padding:10px 0; }
+#footer .footer-top ul {padding:30px 0 0 0; margin:0px; }
+#footer .footer-top ul li {list-style:none; border-bottom:solid 1px #454444; }
+#footer .footer-top ul li a {padding:0 0 0 12px; line-height:40px; position:relative; font-size:14px; color:#cccccc; display:block;}
+#footer .footer-top ul li a:hover {color:#e74c3c; }
+#footer .footer-top ul li a:after {content:"\f105"; position:absolute; top:0px; left:0px; display:inline-block; vertical-align:top; line-height:40px; }
+#footer .footer-top .contact-info {padding:25px 0 0 0;}
+#footer .footer-top .contact-slide {display:block; padding:0 0 15px 25px; line-height:24px; font-size:14px; color:#cccccc; position:relative; max-width:225px;}
+#footer .footer-top .contact-slide a {color:#cccccc; }
+#footer .footer-top .contact-slide a:hover {color:#e74c3c; }
+#footer .footer-top .contact-slide .fa {position:absolute; top:0px; left:0px; line-height:24px; font-size:15px; color:#e74c3c; }
+#footer .footer-bottom {padding:27px 0; background:#181717; }
+#footer .footer-bottom .coyp-right {line-height:26px; font-size:14px; color:#ffffff; display:inline-block; }
+#footer .footer-bottom .social-media {float:right; }
+#footer .footer-bottom .social-media ul {padding:0px; margin:0px; }
+#footer .footer-bottom .social-media ul li {float:left; width:auto; padding:0 0 0 18px; list-style:none; }
+#footer .footer-bottom .social-media ul li .fa {width:26px; line-height:26px; color:#fff; text-align:center; font-size:16px; color:#fff; }
+#footer .footer-bottom .social-media ul li .fa:hover {color:#e74c3c; }
+.comment-icon {position:fixed; bottom:45px; right:0px; background:#e74c3c; border-radius:5px 0 0 5px;box-shadow:0 4px 6px rgba(14, 1, 2, 0.3); z-index:99;}
+.comment-icon .fa {width:70px; line-height:70px; color:#fff; font-size:36px; text-align:center;  }
+
+.graph-view {padding:80px 0 100px 0; }
+.graph-view .graph-title {display:block; text-align:center; line-height:30px; font-size:16px; color:#4d4d4d;  padding-bottom:20px;}
+.graph-view .graph-point {position:relative; padding:0 0 40px 50px; }
+.graph-view .point-view {padding:68px 0 0 0;}
+.graph-view .graph-point .fa {position:absolute; top:0px; left:0px; color:#02cbf7; font-size:24px; }
+.graph-view .graph-point h4 {display:block; line-height:24px; color:#02cbf7; font-size:16px; margin:0px;  font-weight:bold; }
+.graph-view .graph-point p {font-size:16px; color:#666666; line-height:24px; margin:0px; }
+
+@media (max-width: 1199px) {
+.container {width: 970px;}
+.online-program .program-box .praper-point ul {text-align:center; }
+.online-program .program-box .praper-point ul li {float:none; display:inline-block;}
+}
+@media (min-width: 992px) {
+.row .col-md-4 {float:left; width:33.33%; padding:0 15px; }
+}
+@media (max-width: 991px) {
+.container {width: 730px;}
+.exam-formula .col-sm-6 {width:100%; }
+h2 {font-size:38px; line-height:46px; }
+#footer .footer-top .row .col-sm-3 {width:50%; min-height:270px; }
+.our-team .member-view {padding-bottom:190px; }
+.our-team .member-view .member-info {min-height:190px;}
+}
+@media (max-width: 767px) {
+.container {width: auto; padding:0 20px;}
+.row .col-sm-4 {width:100%; padding:0 15px; }
+.row .col-sm-6 {width:100%; padding:0 15px; }
+.row .col-sm-3 {width:100%; padding:0 15px; }
+.row .col-sm-5 {width:100%; padding:0 15px; }
+.row .col-sm-7 {width:100%; padding:0 15px; }
+h2 {font-size:32px; line-height:40px; }
+.offer p {padding:0 30px;}
+.offer .close-right {right:5px;}
+
+#header {position:static; display:inline-block; text-align:center; background:rgba(52,152,219,0.7);}
+#header .logo {float:none; padding:0 0 20px 0; text-align:center;}
+#header .logo img {display:inline-block;}
+#header .login-btn {float:none; text-align:center;}
+#header .login-btn a {max-width:300px; display:inline-block}
+#header.fiexd {position:static !important; }
+.banner {min-height:500px}
+.banner .banner-text h2 {font-size:30px; line-height:40px; }
+.banner .banner-text .btn-block {padding-top:25px; }
+.banner .banner-text .moblie-number {padding-top:25px;}
+.banner .banner-text .moblie-number .number-view {padding:0px; }
+.banner .banner-text .moblie-number input[type="text"] {padding-left:61px; }
+.banner .banner-text .moblie-number input[type="submit"] {position:static; width:100%; padding:10px 0 20px 0; line-height:20px; margin-top:10px;}
+.online-program {padding-top:20px; }
+.exam-formula {padding:40px 0 30px 0; }
+.introducing-vedio {padding:30px 0; }
+.course-benefits {padding:30px 0 10px 0; }
+.course-benefits .benefits-box {padding-bottom:15px; }
+.testimonials {padding:30px 0;}
+.testimonials h2 {padding-bottom:30px; }
+.testimonials .testimonials-slider .owl-thumb-item img {max-width:80px; min-height: 80px}
+.our-team {padding:40px 0;}
+.our-team .member-view {display:none;}
+.our-team .member-viewSlider {display:block !important; padding-top:20px;}
+.our-team .member-viewSlider .member-block {text-align:center; width:100%;}
+ 
+.guidance-form {padding:30px 0; }
+.guidance-form .form-filde {padding:30px 0 0 0;}
+.refer-info {padding:30px 0;}
+.refer-info h2 {padding-bottom:30px;}
+.refer-info .refer-box .icon {padding-bottom:15px}
+.refer-info .refer-box:after  {background-image:url(../images/refer-arrowDown.png); width:26px; height:62px; left:50%; right:auto; top:auto; bottom:9px; margin-left:-13px;}
+.refer-info .refer-box {padding-bottom:80px; }
+.refer-info .col-sm-4:last-child .refer-box {padding-bottom:30px; }
+#footer .footer-top .row .col-sm-3 {width:100%; min-height:inherit; padding-bottom:20px;  }
+#footer .footer-top {padding-bottom:0px; }
+#footer .footer-bottom {text-align:center; padding:20px 0; }
+#footer .footer-bottom .social-media {float:none; padding:10px 0 0 0;}
+#footer .footer-bottom .social-media ul li {padding:0 8px; float:none; display:inline-block; }
+.login-popup .left-img {display:none;}
+.login-popup .right-info {width:100%; padding-bottom:30px; }
+#header .login-btn {margin:0px; }
+}
+@media (max-width: 639px) {
+.login-popup .right-info .sosal-midiyaLogin .facebook-link {width:100%; padding:0px 0 15px 0;}
+.login-popup .right-info .sosal-midiyaLogin .google-link {width:100%; padding:0px;}
+.login-popup .right-info .sosal-midiyaLogin .google-link a .fa {left:0px;}
+}
+@media (max-width: 479px) {
+.exam-formula .formula-box .text-block {width:100%;}
+h2 {font-size:26px; line-height:34px;}
+.exam-formula .formula-box .title {line-height:30px;}
+.testimonials .testimonials-slider p {font-size:16px; line-height:22px;}
+.testimonials .testimonials-slider .item {padding:0 30px; }
+.testimonials .testimonials-slider p .fa.fa-quote-left {left:-30px;}
+.testimonials .testimonials-slider p .fa.fa-quote-right {right:-30px;}
+.testimonials .testimonials-slider p .fa {font-size:30px; line-height:36px}
+.testimonials .testimonials-slider .owl-thumb-item {margin:0 4px;}
+.testimonials .testimonials-slider .owl-thumb-item img {max-width:56px; border:solid 2px #dfdfdf; min-height: 56;}
+.testimonials .testimonials-slider .owl-thumb-item.active img {border:solid 2px #3498db; }
+}
+
+.logo img{
+    max-height: 50px;
+}

@@ -1,0 +1,101 @@
+.leaderboard{
+    width: 75%;
+    margin: auto;
+    margin-top: 5%;
+    background: #fffeff;
+    border-radius: 5px;
+    padding-bottom: 10px;
+    margin-bottom: 5%;
+}
+
+.leaderboard-header{
+    background: #ee8378;
+}
+.leaderboard-header h1{
+    color: white;
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 4%;
+    font-size: 25px;
+    font-weight: 600;
+}
+.users-profiles{
+    margin: 15px;
+    padding: 0px;
+}
+.users-profiles ul{
+    margin: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    list-style: none;
+}
+.member-profile{
+    width: auto;
+    background: #fff;
+    height: 48px;
+    vertical-align: middle;
+    margin-top: 10px;
+    line-height: 47px;
+    padding: 20px;
+    color: #ee8378;
+    font-size: 28px;
+    border-radius: 5px;
+    border: 2px solid white;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+    padding-bottom: 35px;
+    border: 2px solid #efedef;
+}
+.member-profile:first-child{
+    background: #ee8378;
+    color: #fff;
+}
+.profile-image-div {
+    float: left;
+}
+.profile-image{
+    border-radius: 50%;
+    width: 125%;
+}
+.username-div {
+    width: 40%;
+    text-align:left;
+    margin-left: 4%;
+    float: left;
+}
+.username-div p{
+    margin: 0px;
+    padding: 0px;
+    margin-top: -10px;
+}
+.username-div p.points{
+    font-size: 18px;
+    margin-top: -15px;
+}
+.display {display: inline-block;}
+
+
+#content,
+.window-wrap {
+    background: #f1eefa;
+}
+.rank-div {
+    width: 22%;
+    text-align: right;
+    float: right;
+}
+.rank-div i{
+    color: #f6507d;
+    font-size: 62px;
+    margin-right: 40px;
+}
+.member-profile:first-child .rank-div i{
+    color: #ffd82c;
+}
+.member-profile:nth-child(2) .rank-div i{
+    color: #c2b7b7;
+}
+.member-profile:nth-child(3) .rank-div i{
+    color: #8d5034;
+}
