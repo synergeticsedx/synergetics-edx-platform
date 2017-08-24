@@ -102,7 +102,12 @@ cms/static/sass/*.css
 cms/static/sass/*.css.map
 cms/static/themed_sass/
 themes/**/css/*.css
-themes/**/css/discussion/*.css
+themes/**/css/discussion/*.cssthemes/edx.org/**/css/*.css
+themes/edx.org/**/css/discussion/*.css
+themes/red-theme/**/css/*.css
+themes/red-theme/**/css/discussion/*.css
+themes/stanford-style/**/css/*.css
+themes/stanford-style/**/css/discussion/*.css
 
 ### Logging artifacts
 log/
