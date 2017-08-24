@@ -3070,4 +3070,4 @@ COURSE_START_NOTIFY_DAY = 2
 
 ############## Settings for Enable MicroMasters Program ######################
 
-FEATURES['ENABLE_MICRO_MASTERS'] = False
+FEATURES['ENABLE_MICRO_MASTERS'] = True
