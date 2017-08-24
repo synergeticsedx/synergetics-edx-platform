@@ -1,0 +1,97 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML
+%>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="domain-details" id="domain-details">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Domain Details</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="error hidden alert alert-danger">
+                <strong class="message"></strong>
+            </div>         
+            <form id="domain-config-form" class="form-horizontal form-label-left" data-toggle="validator">
+                <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Platform Name</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" id="platform-name" name="platform_name" class="form-control col-md-7 col-xs-12" value="${platform_name}" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Changes Platform Name"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Site Name</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" id="domain" name="domain" class="form-control col-md-7 col-xs-12" value="${domain}" required>
+                        <div class="help-block with-errors"></div>
+                    </div>            
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Change Site Name"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>       
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment Support Email</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="email" id="payment_support_email" name="payment_support_email" class="form-control col-md-7 col-xs-12" value="${payment_support_email}" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Support Email For Payment queries"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Email From</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="email" id="email_from_address" name="email_from_address" class="form-control col-md-7 col-xs-12" value="${email_from_address}" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="The email from which the mail will be sent to users."><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Course Email From</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="email" id="course_email_from_addr" name="course_email_from_addr" class="form-control col-md-7 col-xs-12" value="${course_email_from_addr}" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Course details Email"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Google Analytics Account</label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" id="google_analytics_account" name="google_analytics_account" class="form-control col-md-7 col-xs-12" value="${google_analytics_account}">
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2">
+                        <span><a href="https://analytics.google.com/analytics/web/provision/?authuser=0#provision/SignUp/" target="_blank">Learn More!</a></span>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">  
+                        <button type="button" class="btn btn-success" id="domain-config">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/validator.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+</%block>

@@ -1,0 +1,116 @@
+<%page args="user, program, share_settings, program_certificate, dashboard_index, platform_name, program_course_state, user_program_grade"/>
+
+<%!
+
+import urllib
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML, Text
+
+%>
+
+<%namespace name='static' file='../static_content.html'/>
+
+<li class="course-item">
+  <div class="course-container">
+    <article class="course">
+      <section class="details" aria-labelledby="details-heading">
+        <h2 class="hd hd-2 sr" id="details-heading">${_('Program details')}</h2>
+        <div class="wrapper-course-image" aria-hidden="true">
+          <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" data-course-key="${program.id}" class="cover">
+            <img src="${program.banner_image.url}" class="course-image program-image" alt="${program.name}" />
+          </a>
+        </div>
+          <div class="wrapper-course-details">
+            <h3 class="course-title">
+                <a data-course-key="${program.id}" href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}">${program.name}</a>
+            </h3>
+            <div class="program-info">
+              <div class="progress-status">
+                  <span class="info-university">${program_course_state['not_started']} NOT STARTED | </span>
+                  <span class="info-university">${program_course_state['passed']} PASSED | </span>
+                  <span class="info-university">${program_course_state['in_progress']} IN-PROGRESS</span>
+              </div>
+
+              <span class="info-date-block localized-datetime">Started - ${program.start}</span>
+            </div>
+
+            <div class="wrapper-course-actions" id="wrapper-program-actions">
+              <div class="course-actions">
+                <a href="${reverse('openedx.core.djangoapps.micro_masters.views.program_info', kwargs={'program_id': program.id})}" class="enter-course" data-course-key="5">${_('View Path')}<span class="sr">&nbsp;p name</span></a>
+
+                  % if share_settings:
+                    <%
+                      share_url = urllib.quote_plus(request.build_absolute_uri(reverse('program_about', args=str(program.id))))
+                      share_window_name = 'shareWindow'
+                      share_window_config = 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=640, height=480'
+                    %>
+                    % if share_url and share_settings.get('DASHBOARD_FACEBOOK', False):
+                      <% facebook_url = 'https://www.facebook.com/sharer/sharer.php?u=' + share_url %>
+                        <a
+                          data-tooltip="${_('Share on Facebook')}"
+                          class="action action-facebook"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          href="${facebook_url}"
+                          target="_blank"
+                          title="${_('Share on Facebook')}"
+                          onclick="window.open('${facebook_url}', '${share_window_name}', '${share_window_config}'); return false;">
+                          <span class="sr">${_('Facebook')}</span>
+                          <span class="fa fa-facebook" aria-hidden="true"></span>
+                        </a>
+                    % endif
+                    % if share_url and share_settings.get('DASHBOARD_TWITTER', False):
+                      <% share_text_default = _("I'm learning on {platform_name}:").format(platform_name=settings.PLATFORM_NAME) %>
+                      <% share_text = urllib.quote_plus(share_settings.get('DASHBOARD_TWITTER_TEXT', share_text_default)) %>
+                      <% twitter_url = 'https://twitter.com/intent/tweet?text=' + share_text + '%20' + share_url %>
+                        <a
+                          data-tooltip="${_('Share on Twitter')}"
+                          class="action action-twitter"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          href="${twitter_url}"
+                          target="_blank"
+                          title="${_('Share on Twitter')}"
+                          onclick="window.open('${twitter_url}', '${share_window_name}', '${share_window_config}'); return false;">
+                          <span class="sr">${_('Twitter')}</span>
+                          <span class="fa fa-twitter" aria-hidden="true"></span>
+                        </a>
+                    % endif
+                  % endif
+                </div>
+            </div>
+
+            <div class="course-progress">
+                <div class="progress" id="program_progress_${dashboard_index}"></div>
+            </div>
+
+          </div>
+      </section>
+      <footer class="wrapper-messages-primary">
+        <ul class="messages-list">
+          % if program_certificate:
+            <div class="message message-status course-status-certavailable is-shown">
+              <p class="message-copy">Your final grade:
+              <span class="grade-value">${user_program_grade}%</span>.
+              </p>
+              <div class="wrapper-message-primary">
+                <ul class="actions actions-primary">
+                    <li class="action action-certificate">
+                    <a class="btn" href="${reverse('openedx.core.djangoapps.micro_masters.views.prorgam_user_certificate', kwargs={'certificate_uuid': program_certificate.verify_uuid})}" target="_blank" title="This link will open the certificate web view">
+                       View Certificate</a></li>
+                </ul>
+              </div>
+            </div>
+          % endif
+
+        </ul>
+      </footer>
+    </article>
+  </div>
+</li>
+<script>
+ $( document ).ready(function() {
+    progressBar(${user_program_grade}, "#program_progress_${dashboard_index}");
+ });
+</script>

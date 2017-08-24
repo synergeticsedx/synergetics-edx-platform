@@ -1,0 +1,118 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="student_details" id="student_details">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Account Details</h2>
+            <a href="/site-administration/student-details/" class="navbar-right" data-toggle="tooltip" title="Close" data-placement="bottom"><h2><span class="fa fa-times"></span></h2></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="alert hidden" id="alert"></div>
+            <input type="hidden" name="user_id" id="user_id" value="${user_id}">
+            <div class="row">
+                <div class="form-group"> 
+                    <label for="username">Username</label>
+                    <span class="form-control" readonly="readonly">${username}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required class="field-update form-control" value="${name}">
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required="required" class="field-update form-control" value="${email}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="year_of_birth">Year of Birth</label>                
+                    <select class="field-update form-control" name="year_of_birth">
+                    % for option in year_of_birth_options:
+                        % if year_of_birth == option['name']:
+                            <option value="${option['value']}" selected>${option['name']}</option>
+                        % else:
+                            <option value="${option['value']}">${option['name']}</option>
+                        % endif
+                    % endfor
+                    </select>               
+                </div>
+            </div>           
+            <div class="row">
+                <div class="form-group">
+                    <label for="level_of_education">Education Completed</label>             
+                    <select class="field-update form-control" name="level_of_education">
+                    % for option in level_of_education_options:
+                        % if level_of_education == option['name']:
+                            <option value="${option['value']}" selected>${option['name']}</option>
+                        % else:
+                            <option value="${option['value']}">${option['name']}</option>
+                        % endif
+                    % endfor
+                    </select>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="form-group ">
+                    <label for="gender">Gender</label>
+                    <select class="field-update form-control" name="gender">
+                    % for option in gender_options:
+                        % if gender == option['name']:
+                            <option value="${option['value']}" selected>${option['name']}</option>
+                        % else:
+                            <option value="${option['value']}">${option['name']}</option>
+                        % endif
+                    % endfor
+                    </select>
+                </div>  
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>User Role: </label>
+                    <label for="superuser"><input type="checkbox" name="is_superuser" class="field-update"> Administrator</label>
+                    <label for="staff"><input type="checkbox" name="is_staff" class="field-update"> Staff</label>
+                    <label for="site_manager"><input type="checkbox" name="site_manager" class="field-update"> Insights</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Active: 
+                        <input type="checkbox" name="is_active" class="field-update" > 
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ajax-loader hidden text-center">
+    <img src="${static.url('admin_dash/images/loading.gif')}">
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/student.js')}"></script>
+<script>
+    $(document).ready(function(){
+        var CheckboxFields = {
+            'is_active': '${is_active}',
+            'is_superuser': '${is_superuser}',
+            'is_staff': '${is_staff}',
+            'site_manager': '${site_manager}',
+        }
+        for (var field in CheckboxFields){
+            if(CheckboxFields[field] == "True"){
+                $("input[name="+field+"]").attr("checked","checked")
+            }
+        }
+
+    })
+</script>
+</%block>

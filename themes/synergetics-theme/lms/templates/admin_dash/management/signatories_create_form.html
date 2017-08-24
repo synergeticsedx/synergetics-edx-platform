@@ -1,0 +1,70 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<% from django.conf import settings %>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/dataTables.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/responsive.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/buttons.bootstrap.min.css')}">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/bootstrap-editable.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<% from django.core.urlresolvers import reverse %>
+<style type="text/css">
+button, input, select, textarea {
+    width: 100%;
+}
+.html-button{
+    width: 10%;
+    float: right;
+}
+.error-message{
+    color: red;
+}
+.x_panel .x_title a h2 span.fa-times{display: block;}
+</style>
+<div class="student_details" id="student_details">
+    <div class="x_panel">
+        <div class="x_title">
+            % if form.initial:
+                <h2>Edit Certificate Signatories</h2>
+            % else:
+                <h2>Add Certificate Signatories</h2>
+            % endif
+            <a href="${reverse('show-signatories')}" class="navbar-right" data-toggle="tooltip" title="Close" data-placement="bottom"><h2><span class="fa fa-times"></span></h2></a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+
+                % for item in form:
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="name">${item.label}</label>
+                            ${item}
+                            <span>${item.help_text}</span>
+                            <span class="error-message">${item.errors}</span>
+                        </div>
+                    </div>
+                % endfor
+                <input type="reset" class="html-button" value="Reset">
+                <input type="submit" class="html-button" name="submit"/>
+            </form>
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/jquery.dataTables.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.buttons.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.responsive.min.js')}"></script>
+<script src="${static.url('admin_dash/js/responsive.bootstrap.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.flash.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.html5.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.print.min.js')}"></script>
+<script src="${static.url('admin_dash/js/bootstrap-editable.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+</%block>

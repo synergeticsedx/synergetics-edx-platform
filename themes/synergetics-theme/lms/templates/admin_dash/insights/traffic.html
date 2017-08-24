@@ -1,0 +1,189 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from django.core.urlresolvers import reverse
+%>
+
+<%block name="content">
+  <!-- top tiles -->
+  <div class="row tile_count">
+    <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+      <span class="count_top"><i class="fa fa-graduation-cap"></i> Total Students</span>
+      <div class="count">${num_students}</div>
+      <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>4% </i> From last Week</span> -->
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+      <span class="count_top"><i class="fa fa-user"></i> Total Instructors</span>
+      <div class="count green">${num_instructors}</div>
+      <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+      <span class="count_top"><i class="fa fa-book"></i> Total Courses</span>
+      <div class="count">${num_courses}</div>
+      <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+    </div>
+  </div>
+  <!-- /top tiles -->
+  <div class="dashboard_graph">
+    <div class="row x_title">
+      <div class="col-md-6">
+        <h3>Traffic <small>Site visits</small></h3>
+      </div>
+      <div class="col-md-6">
+        <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+          <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+          <span>${start_date_str} - ${end_date_str}</span> <b class="caret"></b>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="chart_visits" class="demo-placeholder"></div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="chart_content_views" class="demo-placeholder"></div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="chart_visits_vs_content_views" class="demo-placeholder"></div>
+    </div>
+
+    <div class="clearfix"></div>
+  </div>
+</%block>
+
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('admin_dash/js/highcharts.js')}"></script>
+  <script type="text/javascript" src="${static.url('admin_dash/js/exporting.js')}"></script>
+  <script type="text/javascript">
+    var update_traffic_report_url = "${reverse('update_traffic_report')}";
+
+    function setDefaultDates(){
+        $('#reportrange span').html("${start_date_str}" + ' - ' + "${end_date_str}");
+    }
+    function updateTrafficReport(startDate, endDate){
+        $.post(
+            update_traffic_report_url,
+            {
+                'start_date': startDate,
+                'end_date': endDate
+            }
+        ).done(function(result) {
+            chart_visits.xAxis[0].setCategories(result.date_list);
+            chart_content_views.xAxis[0].setCategories(result.date_list);
+            chart_visits_vs_content_views.xAxis[0].setCategories(result.date_list);
+            chart_visits.series[0].setData(result.visitors);
+            chart_content_views.series[0].setData(result.content_viewers);
+            chart_visits_vs_content_views.series[0].setData(result.visitors);
+            chart_visits_vs_content_views.series[1].setData(result.content_viewers);
+        });
+    }
+
+    Highcharts.setOptions({
+        colors: ['#8D38C9']
+    });
+
+    var chart_visits = Highcharts.chart('chart_visits', {
+        credits: { enabled: false },
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Date wise site viewers'
+        },
+        xAxis: {
+            title: {
+                text: 'Date'
+            },
+            categories: eval("${traffic_report['date_list']}")
+        },
+        yAxis: {
+            title: {
+                text: 'Visitors'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+            }
+        },
+        series: [{
+            name: 'Visitors',
+            data: eval("${traffic_report['visitors']}")
+        }]
+    });
+
+    Highcharts.setOptions({
+        colors: ['#75C938']
+    });
+
+    var chart_content_views = Highcharts.chart('chart_content_views', {
+        credits: { enabled: false },
+        title: {
+            text: 'Date wise content viewers'
+        },
+        xAxis: {
+            title: {
+                text: 'Date'
+            },
+            categories: eval("${traffic_report['date_list']}")
+        },
+        yAxis: {
+            title: {
+                text: 'Visitors'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+            }
+        },
+        series: [{
+            name: 'Content viewers',
+            data: eval("${traffic_report['content_viewers']}")
+        }]
+    });
+
+    Highcharts.setOptions({
+        colors: ['#8D38C9', '#75C938']
+    });
+
+    var chart_visits_vs_content_views = Highcharts.chart('chart_visits_vs_content_views', {
+        credits: { enabled: false },
+        title: {
+            text: 'Date wise site viewers VS content viewers'
+        },
+        xAxis: {
+            title: {
+                text: 'Date'
+            },
+            categories: eval("${traffic_report['date_list']}")
+        },
+        yAxis: {
+            title: {
+                text: 'Visitors'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+            }
+        },
+        series: [{
+            name: 'Visitors',
+            data: eval("${traffic_report['visitors']}")
+        }, {
+            name: 'Content viewers',
+            data: eval("${traffic_report['content_viewers']}")
+        }]
+    });
+  </script>
+</%block>
+

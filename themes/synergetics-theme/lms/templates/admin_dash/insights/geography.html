@@ -1,0 +1,75 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from django.core.urlresolvers import reverse
+%>
+
+<%block name="content">
+  <div class="dashboard_graph">
+    <div class="row x_title">
+      <div class="col-md-6">
+        <h3>Users Geography<small> Know your users Location</small></h3>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div id="state_distribution" class="state-distribution"></div>
+    </div>
+
+    <div class="clearfix"></div>
+  </div>
+</%block>
+
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('admin_dash/js/highmaps.js')}"></script>
+  <script type="text/javascript" src="${static.url('admin_dash/js/in-all-disputed.js')}"></script>
+  <script type="text/javascript" src="${static.url('admin_dash/js/exporting.js')}"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(function () {
+
+          // Prepare demo data
+
+          var data = eval("${course_user_state}")
+
+          $('#state_distribution').highcharts('Map', {
+              
+              title : {
+                  text : 'Users by State(India)'
+              },
+              credits: { enabled: false },
+              mapNavigation: {
+                  enabled: true,
+                  buttonOptions: {
+                      verticalAlign: 'bottom'
+                  }
+              },
+              
+              colorAxis: {
+                  min: 0
+              },
+
+              series : [{
+                  animation: {
+                    duration: 1000
+                  },
+                  data : data,
+                  mapData: Highcharts.maps['countries/in/custom/in-all-disputed'],
+                  joinBy: 'name',
+                  name: 'Users',
+                  states: {
+                      hover: {
+                          color: '#6e57ed'
+                      }
+                  },
+                  dataLabels: {
+                      enabled: true,
+                      format: '{point.name}'
+                  }
+              }]
+          });
+      });
+    });
+  </script>
+
+</%block>

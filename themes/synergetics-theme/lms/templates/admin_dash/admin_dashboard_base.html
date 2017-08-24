@@ -1,0 +1,214 @@
+<%namespace name='static' file='../static_content.html'/>
+
+<%!
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+%>
+
+<%
+  username = user.username
+  profile_image_url = get_profile_image_urls_for_user(user)['medium']
+  protocol = 'https://' if request.is_secure() else 'http://'
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/x-icon" href="${static.url(static.get_value('favicon_path', settings.FAVICON_PATH))}" />
+    <title>${settings.PLATFORM_NAME} | Administration</title>
+
+    <!-- Bootstrap -->
+    <link href="${static.url('admin_dash/css/bootstrap.min.css')}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="${static.url('admin_dash/css/font-awesome.min.css')}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="${static.url('admin_dash/css/nprogress.css')}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="${static.url('admin_dash/css/green.css')}" rel="stylesheet">	
+    <!-- bootstrap-progressbar -->
+    <link href="${static.url('admin_dash/css/bootstrap-progressbar-3.3.4.min.css')}" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="${static.url('admin_dash/css/daterangepicker.css')}" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="${static.url('admin_dash/css/custom.min.css')}" rel="stylesheet">
+    <%block name="headextra"/>
+
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/site-administration/" class="site_title"><i class="fa fa-paw"></i> <span>Administration</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="${profile_image_url}" alt="Profile image" class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>${username}</h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Site</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-bar-chart-o"></i> Insights <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/site-administration/">Traffic</a></li>
+                      <li><a href="/site-administration/demographics/">Demographics</a></li>
+                      <li><a href="/site-administration/courses-chart/">Courses</a></li>
+                      <li><a href="/site-administration/revenue-report/">Revenue</a></li>
+                    </ul>
+                  </li>
+                  % if request.user.is_superuser:
+                  <li><a><i class="fa fa-wrench"></i>Configurations <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/site-administration/site-content/">Content</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-building"></i>Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/site-administration/student-details/">Users</a></li>
+                      <li><a href="/site-administration/display-courses/">Courses</a></li>
+                      % if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+                        <li><a href="${reverse('show-programs')}">Programs</a></li>
+                        <li><a href="${reverse('show-subjects')}">Programs Subjects</a></li>
+                        <li><a href="${reverse('show-language')}">Programs Language</a></li>
+                        <li><a href="${reverse('show-instructor')}">Programs Instructor</a></li>
+                        <li><a href="${reverse('show-institution')}">Programs Institution</a></li>
+                        <li><a href="${reverse('show-signatories')}">Program Certificate Signatories</a></li>
+                        <li><a href="${reverse('program-enrollment')}">Programs Enrollment</a></li>
+                        <li><a href="${reverse('program-coupon-redemption')}">Programs Coupon Redemption</a></li>
+                        <li><a href="${reverse('program-generated-certificate')}">Programs Generated Certificate</a></li>
+                      % endif
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-gift"></i>Offers <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/site-administration/view-offers/">Course Coupon</a></li>
+                      % if settings.FEATURES["ENABLE_MICRO_MASTERS"]:
+                        <li><a href="/site-administration/program-offers/">Program Coupon</a></li>
+                      % endif 
+                    </ul>
+                  </li>
+                  % endif
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="${profile_image_url}" alt="">${username}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="${reverse('dashboard')}"> Go to LMS</a></li>
+                    <li>
+                      <a href="${protocol + settings.CMS_BASE}">
+                        <span>Go to Studio</span>
+                      </a>
+                    </li>
+                    <li><a href="${reverse('logout')}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <%block name="content"/>
+            </div>
+
+          </div>
+          <br />
+
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            &copy; ${settings.PLATFORM_NAME}. All rights reserved
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="${static.url('admin_dash/js/jquery.min.js')}"></script>
+    <!-- Bootstrap -->
+    <script src="${static.url('admin_dash/js/bootstrap.min.js')}"></script>
+    <!-- FastClick -->
+    <script src="${static.url('admin_dash/js/fastclick.js')}"></script>
+    <!-- NProgress -->
+    <script src="${static.url('admin_dash/js/nprogress.js')}"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="${static.url('admin_dash/js/bootstrap-progressbar.min.js')}"></script>
+    <!-- iCheck -->
+    <script src="${static.url('admin_dash/js/icheck.min.js')}"></script>
+    <!-- DateJS -->
+    <script src="${static.url('admin_dash/js/date.js')}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="${static.url('admin_dash/js/moment.min.js')}"></script>
+    <script src="${static.url('admin_dash/js/daterangepicker.js')}"></script>
+    <!-- Cookie for CSRF token -->
+    <script type="text/javascript" src="${static.url('js/vendor/jquery.cookie.js')}"></script>
+    <script type="text/javascript">
+      $(function() {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRFToken': $.cookie('csrftoken')
+            },
+            dataType: 'json'
+          });
+      });
+    </script>
+
+    <!-- Custom Scripts -->
+    <script src="${static.url('admin_dash/js/custom.js')}"></script>
+
+    <%block name="js_extra"/>
+
+  </body>
+</html>

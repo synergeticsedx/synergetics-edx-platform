@@ -1,0 +1,87 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<% 
+  from django.conf import settings 
+%>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/dataTables.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/responsive.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/buttons.bootstrap.min.css')}">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/bootstrap-editable.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<% from django.core.urlresolvers import reverse %>
+<div class="course_list" id="program_enrollment_list">
+    <div class="x_panel">
+        <div class="x_title">
+            <div class="alert alert-danger hidden"></div>
+            <h2>Program Enrollment Details</h2>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            % if context.get('error_message','') != '':
+                <div class="alert alert-danger">
+                    <strong>${error_message}</strong>
+                </div>
+            % endif
+            <table id="program_enrollment_details_datatables" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    % for heading in program_enrollment_headers:
+                    <th class="${'nosort' if heading in no_sort_columns else ''}">${heading}</th>
+                    % endfor
+                    </tr>
+                </thead>
+                <tbody>
+                    % if len(program_enrollment_details) != 0:
+                        % for program_enrollment in program_enrollment_details:
+                            <tr>
+                            % for details in program_enrollment:
+                                % if details == 'program_enrollment_active':
+                                    % if program_enrollment[details]:
+                                        <td><img src="${static.url('admin_dash/images/icon-yes.gif')}"></td>
+                                    % else:
+                                        <td><img src="${static.url('admin_dash/images/icon-no.gif')}"></td>
+                                    % endif
+                                % else:
+                                    <td>${program_enrollment[details]}</td>
+                                % endif
+                            % endfor
+                            </tr>
+                        % endfor
+                    % endif
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/jquery.dataTables.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.buttons.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.responsive.min.js')}"></script>
+<script src="${static.url('admin_dash/js/responsive.bootstrap.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.flash.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.html5.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.print.min.js')}"></script>
+<script src="${static.url('admin_dash/js/bootstrap-editable.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script>
+    var table = $('#program_enrollment_details_datatables').DataTable({
+       'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ]        
+    });
+    table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container()));
+
+</script>
+</%block>

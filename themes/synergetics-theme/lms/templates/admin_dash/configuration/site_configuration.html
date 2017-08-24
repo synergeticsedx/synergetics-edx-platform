@@ -1,0 +1,103 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML
+%>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/bootstrap-colorpicker.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+</%block>
+
+<%block name="content">
+<div class="site_details" id="site_details">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Site Details</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="error hidden alert alert-danger">
+                <strong class="message"></strong>
+            </div>        
+            <form class="form-horizontal form-label-left">
+                <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Platform Logo</label>
+                    <div class="col-md-7 col-sm-7 col-xs-9 file"> 
+                        <div class="fileUpload text-center">
+                            <span>Browse</span>
+                            <input id="upload_logo" type="file" class="upload" name="logo" />
+                        </div>
+                        <input id="upload" type="text" value="${site_details.logo}" class="form-control upload_logo" />
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2 col-xs-3">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Changes your Site's Logo"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Favicon Icon</label>
+                    <div class="col-md-7 col-sm-7 col-xs-9 file"> 
+                        <div class="fileUpload text-center">
+                            <span>Browse</span>
+                            <input id="upload_favicon" type="file" class="upload" name="favicon" />
+                        </div>
+                        <input id="uploadFile" type="text" value="${site_details.favicon}" class="form-control upload_favicon" />
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2 col-xs-3">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Changes your Site's Favicon Icon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>                        
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Site Color</label>
+                    <div class="col-md-7 col-sm-7 col-xs-9">
+                      <div class="input-group demo2">
+                        <input type="text" value="${site_details.primary_color if site_details.primary_color is not None else ''}" class="form-control" id="site-color" name="site-color" />
+                        <span class="input-group-addon"><i></i></span>
+                      </div>
+                    </div>
+                    <div class="help_link control-label col-md-2 col-sm-2 col-xs-3">
+                        <span data-toggle="tooltip" data-placement="bottom" title="Changes your primary color"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Select landing page theme</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">    
+                    % for template in templates:
+                        <input type="radio" class="input-hidden" name="template-id" value="${template.id}" id="template_id_${template.id}" />
+                        <label for="template_id_${template.id}" class="template_color">
+                            <div class="template_div" style="background-color:${template.brand_color}">
+                                <p class="brand_text">${template.theme_name}</p>
+                            </div>
+                        </label>
+                    % endfor
+                    </div>
+                </div>                
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
+                        <button type="button" class="btn btn-success save-changes" id="user-interface">Save Changes</button>
+                    </div>
+                </div>                      
+            </form>
+        </div>
+    </div>
+ </div>
+</%block>
+
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/bootstrap-colorpicker.min.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script type="text/javascript">
+    % for template in templates:
+        % if site_details.template is not None and template.id == site_details.template.id:
+            $("#template_id_${template.id}").attr("checked", true)
+        % endif
+    % endfor 
+    $('input[type=file]').change(function(){
+        var file = this.files[0];
+        var id = this.id;
+        $("."+id+"").val(file.name);
+    });
+</script>
+</%block>

@@ -1,0 +1,196 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%!
+from openedx.core.djangolib.markup import HTML
+%>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/dataTables.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/responsive.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/buttons.bootstrap.min.css')}">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/bootstrap-editable.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="coupon_list" id="coupon_list">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Coupons</h2>
+            <a href="#" class="btn btn-default btn-primary navbar-right" data-toggle="modal" data-target="#addCouponModal" aria-hidden="true">Add Coupon</a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table id="coupons_datatable" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        % for label in labels:
+                        <th class="${'nosort' if label in no_sort_columns else ''}">${label}</th>
+                        % endfor
+                    </tr>
+                </thead>
+                <tbody>
+                    % if len(coupon_details) != 0:
+                        % for coupon in coupon_details:
+                        <tr>
+                            % for details in coupon:
+                                % if details != 'coupon_id':
+                                    % if details == 'code':
+                                        <td><a href="/site-administration/update-program-coupon/${coupon['coupon_id']}/" class="update-link">${coupon[details]}</a></td>
+                                    % elif details == 'status':
+                                        <td><img src="${HTML(coupon[details])}" alt="status"></td>
+                                    % else:
+                                        <td>${coupon[details]}</td>
+                                    % endif
+                                % endif
+                            % endfor
+                                <td><a href="#" class="delete-coupon"><span class="fa fa-trash-o" data-couponId="${coupon['coupon_id']}" data-toggle="modal" data-target="#deletecouponModal" aria-hidden="true"></span></a></td>
+                        </tr>
+                        % endfor
+                    % endif
+                </tbody>
+            </table>
+            <!-- Add Coupon Modal-->
+            <div class="modal fade" id="addCouponModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add Coupon</h4>
+                        </div>
+                        <form class="form-horizontal" id="new-program-coupon" data-toggle="validator">
+                            <div class="modal-body create-coupon-error">
+                                <div class="error hidden alert alert-danger">
+                                    <strong class="message"></strong>
+                                </div>
+                                <div class="form-group">
+                                    <label for="coupon-code" class="control-label control-label col-md-3 col-sm-3 col-xs-12">Code *</label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="text" name="code" class="form-control" id="code" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="control-label control-label col-md-3 col-sm-3 col-xs-12">Description</label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <textarea class="form-control" name="description" id="description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="course" class="control-label control-label col-md-3 col-sm-3 col-xs-12">Select Program *</label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <select class="form-control" name="program_id" id="program_id" required>
+                                            <option value>Select Program</option>
+                                            % for program in programs:
+                                            <option value="${program.id}">${program.name}</option>
+                                            % endfor
+                                        </select>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="discount" class="control-label control-label col-md-3 col-sm-3 col-xs-12">Discount(%) *</label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <input type="number" name="discount" id="discount" min="0" max="100" class="form-control" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiration_date" class="control-label col-md-3 col-sm-3 col-xs-12">Expiration Date</label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                                        <fieldset>
+                                          <div class="control-group">
+                                            <div class="controls">
+                                              <div class="xdisplay_inputx form-group has-feedback">
+                                                <input type="text" class="form-control has-feedback-left" id="single_cal2" name="expiration_date" placeholder="Select Date and Time" aria-describedby="inputSuccess2Status">
+                                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                                <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"> Active</label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12 coupon-active">
+                                        <input type="checkbox" name="active" class="flat" id="active" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="create-program-coupon">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Confirm Delete Modal-->
+            <div class="modal fade" id="deletecouponModal" role="dialog">
+                <div class="modal-dialog">          
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Delete Coupon</h4>
+                        </div>
+                        <div class="modal-body delete-coupon-error">
+                            <div class="error hidden alert alert-danger">
+                                <strong class="message"></strong>
+                            </div>
+                            <div class="alert alert-danger hidden" id="delete-error"></div>
+                            <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                            <a href="#" role="button" class="btn btn-default btn-danger" id="confirm-delete-program-coupon">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/jquery.dataTables.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.buttons.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.responsive.min.js')}"></script>
+<script src="${static.url('admin_dash/js/responsive.bootstrap.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.flash.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.html5.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.print.min.js')}"></script>
+<script src="${static.url('admin_dash/js/validator.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script>
+$(document).ready(function(){
+    var table = $('#coupons_datatable').DataTable({
+       'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ]     
+    });
+    table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container()));
+
+    $(".delete-coupon").on('click', function(){
+        var couponId = this.childNodes[0].dataset.couponid
+        $("#confirm-delete-program-coupon").attr('data-couponId', couponId) 
+    });
+    $("#coupon_list #deletecouponModal .close-modal").click(function(){
+        if(!(($(".delete-coupon-error .error").hasClass("hidden")))){
+            $(".delete-coupon-error .error").addClass("hidden");
+            $(".delete-coupon-error .error .message").html("")
+        }
+    }); 
+    $("#coupon_list #addCouponModal .close-modal").click(function(){
+        if(!(($(".create-coupon-error .error").hasClass("hidden")))){
+            $(".create-coupon-error .error").addClass("hidden");
+            $(".create-coupon-error .error .message").html("")
+        }
+    });
+})    
+</script>
+</%block>

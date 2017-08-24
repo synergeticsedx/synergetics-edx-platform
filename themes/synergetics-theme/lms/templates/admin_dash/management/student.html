@@ -1,0 +1,170 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/dataTables.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/responsive.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/buttons.bootstrap.min.css')}">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="student_details" id="student_details">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Student Details</h2>
+            <a href="#" class="btn btn-default btn-primary navbar-right" data-toggle="modal" data-target="#adduserModal" aria-hidden="true">Add User</a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table id="students_datatable" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed students" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    % for heading in details_to_display:
+                    <th class="${'nosort' if heading in no_sort_columns else ''}">${heading}</th>
+                    % endfor
+                    </tr>
+                </thead>
+                <tbody>
+                    % for student in students:
+                        <tr>
+                            <td><a href="/site-administration/update-user/${users_id[student]}/" class="user update-link">${student}</a></td>
+                            % for details in students[student]:
+                                % if type(students[student][details]) == bool:
+                                    % if students[student][details]:
+                                    <td><img src="${static.url('admin_dash/images/icon-yes.gif')}"></td>
+                                    % else:
+                                    <td><img src="${static.url('admin_dash/images/icon-no.gif')}"></td>
+                                    % endif
+                                % else:
+                                    <td>${students[student][details]}</td>
+                                % endif
+                            % endfor
+                            <td><a href="#" class="delete-user" onClick='setUserId("${users_id[student]}");'><span class="fa fa-trash-o" data-user="${users_id[student]}" data-toggle="modal" data-target="#deleteModal" aria-hidden="true"></span></a></td>
+                        </tr>
+                    % endfor
+                </tbody>
+            </table>
+            <!-- Add User Modal-->
+            <div class="modal fade" id="adduserModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add User</h4>
+                        </div>
+                        <form id="new-user" data-toggle="validator">
+                            <div class="modal-body create-user-error">
+                                <div class="error hidden alert alert-danger">
+                                    <strong class="message"></strong>
+                                </div>
+                                % for field in resitration_fields:
+                                    <div class="form-group">
+                                    % if field['label'] in required_fields:
+                                        <label for="${field['label']}">${field['label']}${" *" if field['required'] == True else ""}</label>
+                                        % if field['type'] in common_field_type:
+                                            <input type="${field['type']}" name="${field['name']}" placeholder="${field['placeholder']}" class="form-control" minlength="${field['restrictions'].get('min_length','')}"
+                                            maxlength="${field['restrictions'].get('max_length', '')}" id="${field['name']}" required>
+                                        % else:
+                                            <select name="${field['name']}" id="${field['name']}" class="form-control" required>
+                                                % for option in field['options']:
+                                                <option value="${option['value']}">${option['name']}</option>
+                                                % endfor
+                                            </select>
+                                        % endif
+                                        <div class="help-block with-errors"></div>
+                                    % endif
+                                    </div>  
+                                % endfor
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <label><input type="checkbox" name="admin" id="admin" class="flat"> Admin</label>
+                                        </li>
+                                        <li>
+                                            <label><input type="checkbox" name="instructor" id="instructor" class="flat"> Instructor</label>
+                                        </li>
+                                        <li>    
+                                            <label><input type="checkbox" name="site_admin" id="site_admin" class="flat"> Insights</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label><input type="checkbox" name="mail_credentials" id="mail_credentials" class="flat"> Send Login Credentials to the User.</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="create-user">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Confirm Delete Modal-->
+            <div class="modal fade" id="deleteModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Delete User</h4>
+                        </div>
+                        <div class="modal-body delete-user-error">
+                            <div class="error hidden alert alert-danger">
+                                <strong class="message"></strong>
+                            </div>
+                            <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                            <a href="#" role="button" class="btn btn-default btn-danger" id="confirm-delete-user">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/jquery.dataTables.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.buttons.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.responsive.min.js')}"></script>
+<script src="${static.url('admin_dash/js/responsive.bootstrap.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.flash.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.html5.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.print.min.js')}"></script>
+<script src="${static.url('admin_dash/js/validator.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script>
+
+    function setUserId(userId){
+        $("#confirm-delete-user").attr("data-userId", userId);
+    }
+
+    var table = $('#students_datatable').DataTable({
+       'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+    table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container()));
+
+    $("#student_details #deleteModal .close-modal").click(function(){
+        if(!(($(".delete-user-error .error").hasClass("hidden")))){
+            $(".delete-user-error .error").addClass("hidden");
+            $(".delete-user-error .error .message").html("")
+        }
+    });
+    $("#student_details #adduserModal .close-modal").click(function(){
+        if(!(($(".create-user-error .error").hasClass("hidden")))){
+            $(".create-user-error .error").addClass("hidden");
+            $(".create-user-error .error .message").html("")
+        }
+    });
+</script>
+</%block>

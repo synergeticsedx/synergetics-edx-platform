@@ -1,0 +1,130 @@
+<%inherit file="../admin_dashboard_base.html" />
+<%namespace name='static' file='../../static_content.html'/>
+<% from django.conf import settings %>
+<%block name="headextra">
+<link href="${static.url('admin_dash/css/dataTables.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/responsive.bootstrap.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/buttons.bootstrap.min.css')}">
+<link href="${static.url('admin_dash/css/site-config.min.css')}" rel="stylesheet">
+<link href="${static.url('admin_dash/css/bootstrap-editable.css')}" rel="stylesheet">
+</%block>
+<%block name="content">
+<div class="course_list" id="program_list">
+    <div class="x_panel">
+        <div class="x_title">
+            <div class="alert alert-danger hidden"></div>
+            <h2>Programs Details</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            % if context.get('error_message','') != '':
+                <div class="alert alert-danger">
+                    <strong>${error_message}</strong>
+                </div>
+            % endif
+            <table id="program_details_datatables" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                    % for heading in program_headers:
+                    <th class="${'nosort' if heading in no_sort_columns else ''}">${heading}</th>
+                    % endfor
+                    </tr>
+                </thead>
+                <tbody>
+                    % if len(program_details) != 0:
+                        % for program in program_details:
+                            <tr>
+                            % for details in program:
+                                % if details != 'program_id' and details != 'price':
+                                    <td>${program[details]}</td>
+                                % endif
+                                % if details == 'price':
+                                    <td>
+                                        <a href="#" class="program-price" data-type="text" data-pk="${program['program_id']}" data-update="price" data-url="/site-administration/update-program-price/" data-title="Enter Price">${program[details]}</a>
+                                        <span id="${program['program_id']}_currency"> ${settings.PAID_COURSE_REGISTRATION_CURRENCY[0].upper() if program[details] != 'FREE' else ''}</span>
+                                    </td>
+                                % endif
+                            % endfor
+                                <td>
+                                    <a href="#" class="delete-program"><span class="fa fa-trash-o" data-course-key="${program['program_id']}" data-toggle="modal" data-target="#deleteprogramModal" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                        % endfor
+                    % endif
+                </tbody>
+            </table>
+            <!-- Confirm Delete Modal-->
+            <div class="modal fade" id="deleteprogramModal" role="dialog">
+                <div class="modal-dialog">          
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Delete Course</h4>
+                        </div>
+                        <div class="modal-body delete-program-error">
+                            <div class="error hidden alert alert-danger">
+                                <strong class="message"></strong>
+                            </div>
+                            <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                            <a href="#" role="button" class="btn btn-default btn-danger" id="confirm-delete-program">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>                   
+        </div>
+    </div>
+</div>
+</%block>
+<%block name="js_extra">
+<script src="${static.url('admin_dash/js/jquery.dataTables.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.buttons.min.js')}"></script>
+<script src="${static.url('admin_dash/js/dataTables.responsive.min.js')}"></script>
+<script src="${static.url('admin_dash/js/responsive.bootstrap.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.bootstrap.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.flash.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.html5.min.js')}"></script>
+<script src="${static.url('admin_dash/js/buttons.print.min.js')}"></script>
+<script src="${static.url('admin_dash/js/bootstrap-editable.js')}"></script>
+<script src="${static.url('admin_dash/js/configuration.js')}"></script>
+<script>
+    var table = $('#program_details_datatables').DataTable({
+       'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ]        
+    });
+    table.buttons().container().appendTo( $('.col-sm-6:eq(0)', table.table().container()));
+
+    $('.program-price').each(function(index, value){
+        key = value.dataset.pk
+        program_price_id = key.replace(/[^a-zA-Z0-9]/g, "")
+        program_class = value.classList[0]
+        value.setAttribute('id',program_price_id)
+        $('#'+program_price_id).editable({
+            success: function(response, newValue) {
+                currencySpan = document.getElementById(response.program_id+"_currency")
+                currencySpan.innerHTML = (newValue > 0) ? " USD" : ""
+            }
+        })
+    });
+
+    $(".delete-program").click(function(){
+        var program_id = this.childNodes[0].dataset.courseKey
+        $("#confirm-delete-program").attr("data-courseKey", program_id);
+    });
+
+    $("#program_list #deleteprogramModal .close-modal").click(function(){
+        if(!(($(".delete-program-error .error").hasClass("hidden")))){
+            $(".delete-program-error .error").addClass("hidden");
+            $(".delete-program-error .error .message").html("")
+        }
+    });
+</script>
+</%block>
