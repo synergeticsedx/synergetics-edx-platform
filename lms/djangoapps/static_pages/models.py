@@ -1,5 +1,5 @@
 from mongoengine import *
-connect('edxapp')
+# connect('edxapp')
 
 class StaticPage(Document):
     about = StringField(required=False)
