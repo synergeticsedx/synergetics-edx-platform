@@ -265,8 +265,9 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
         context['programs'] = started_programs
     else:
-        del statistical_details.get('values')['number_of_paths']
-        del statistical_details.get('fields')['number_of_paths']
+        if statistical_details:
+            del statistical_details.get('values')['number_of_paths']
+            del statistical_details.get('fields')['number_of_paths']
 
     context['statistical'] = statistical_details
 
