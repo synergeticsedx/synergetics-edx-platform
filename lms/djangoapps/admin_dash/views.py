@@ -315,6 +315,8 @@ def student_details(request, **kwargs):
     students = OrderedDict()
     users = User.objects.all()
     for user in users:
+        if not hasattr(user, 'profile'):
+            continue
         details = OrderedDict()
         details['name'] = user.profile.name
         details['email'] = user.email
