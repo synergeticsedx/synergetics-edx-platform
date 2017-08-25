@@ -35,20 +35,6 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    <label for="year_of_birth">Year of Birth</label>                
-                    <select class="field-update form-control" name="year_of_birth">
-                    % for option in year_of_birth_options:
-                        % if year_of_birth == option['name']:
-                            <option value="${option['value']}" selected>${option['name']}</option>
-                        % else:
-                            <option value="${option['value']}">${option['name']}</option>
-                        % endif
-                    % endfor
-                    </select>               
-                </div>
-            </div>           
-            <div class="row">
-                <div class="form-group">
                     <label for="level_of_education">Education Completed</label>             
                     <select class="field-update form-control" name="level_of_education">
                     % for option in level_of_education_options:
