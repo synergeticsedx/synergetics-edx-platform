@@ -65,6 +65,7 @@ class Courses(TimeStampedModel):
         app_label = 'micro_masters'
         verbose_name = 'Course'
         verbose_name_plural = 'Courses'
+        unique_together = (('course_key', 'name'),)
 
     @classmethod
     def create_or_update_from_course_overview(cls, course_overview):
