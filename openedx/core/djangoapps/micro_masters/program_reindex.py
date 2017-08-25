@@ -36,7 +36,7 @@ def index_programs_information(request):
                 'course': program.id,
                 'content': {
                     'display_name': program.name,
-                    'overview': program.overview
+                    'overview': program.short_description
                 },
                 'image_url': program.banner_image.url,
                 'start': program.start,
@@ -86,7 +86,7 @@ def index_course_programs(course_id):
                 'course': program.id,
                 'content': {
                     'display_name': program.name,
-                    'overview': program.overview
+                    'overview': program.short_description
                 },
                 'image_url': program.banner_image.url,
                 'start': program.start,
@@ -142,7 +142,7 @@ def reindex_specific_program(request, pk):
             'course': program.id,
             'content': {
                 'display_name': program.name,
-                'overview': program.overview
+                'overview': program.short_description
             },
             'image_url': program.banner_image.url,
             'start': program.start,
