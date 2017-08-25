@@ -13,7 +13,6 @@ from django.http import HttpResponseNotFound, HttpResponseServerError, Http404
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from util.cache import cache_if_anonymous
-from .helpers import add_content
 
 valid_templates = []
 
@@ -46,10 +45,8 @@ def render(request, template):
     # Guess content type from file extension
     content_type, __ = mimetypes.guess_type(template)
 
-    page = template.split('.')[0]
-
     try:
-        return add_content(page)
+        return render_to_response('static_templates/' + template, {}, content_type=content_type)
     except TopLevelLookupException:
         raise Http404
 
