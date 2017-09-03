@@ -3,25 +3,25 @@ body.discussion #footer .footer-top .logo {padding-bottom: 30px;}
 #footer img {max-width: 100%;vertical-align: inherit;}
 #footer *:before, #footer *:after {box-sizing: border-box;margin: 0px;padding: 0px;}
 #footer * {box-sizing: border-box;margin: 0px;padding: 0px;}
-#footer .footer-top {background: #1e1d1d;padding: 37px 0 20px 0;}
+#footer .footer-top {background: #ffffff;padding: 37px 0 20px 0;}
 #footer .footer-container {width: 1170px;margin: 0 auto;}
 #footer .footer-row {margin: 0 -15px;overflow: hidden;}
 #footer .footer-row .column-1 {float: left;width: 25%;padding: 0 15px;}
 #footer .footer-top .logo {padding-bottom: 33px;}
-#footer .footer-top p {display: inline-block;font-size: 14px;line-height: 24px;color: #cccccc;margin: 0 0 22px 0;}
+#footer .footer-top p {display: inline-block;font-size: 14px;line-height: 24px;color: #000000;margin: 0 0 22px 0;}
 #footer .footer-top h4 {line-height: 30px;font-size: 21px;color: #ffffff;font-weight: 600;margin: 0px;padding: 13px 0 0 0;font-family: 'Open Sans', sans-serif;}
 #footer .footer-top ul.popular {padding-top: 10px;}
 #footer .footer-top ul {padding: 30px 0 0 0;margin: 0px;}
 #footer .footer-top ul.popular li {padding: 10px 0;}
 #footer .footer-top ul li {list-style: none;border-bottom: solid 1px #454444;}
-#footer .footer-top ul li a {padding: 0 0 0 12px;line-height: 40px;position: relative;font-size: 14px;color: #cccccc;display: block;}
+#footer .footer-top ul li a {padding: 0 0 0 12px;line-height: 40px;position: relative;font-size: 14px;color: #000000;display: block;}
 #footer .footer-top ul li a:hover {color: #e74c3c;text-decoration: none;}
 #footer .footer-top ul li a:after {display: inline-block;font: normal normal normal 14px/1 FontAwesome;font-size: inherit;text-rendering: auto;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
 #footer .footer-top ul li a:after {content: "\f105";position: absolute;top: 0px;left: 0px;display: inline-block;vertical-align: top;line-height: 40px;}
 #footer .footer-top .contact-info {padding: 25px 0 0 0;}
-#footer .footer-top .contact-slide {display: block;padding: 0 0 15px 25px;line-height: 24px;font-size: 14px;color: #cccccc;position: relative;max-width: 225px;}
+#footer .footer-top .contact-slide {display: block;padding: 0 0 15px 25px;line-height: 24px;font-size: 14px;color: #000000;position: relative;max-width: 225px;}
 #footer .footer-top .contact-slide .fa {position: absolute;top: 0px;left: 0px;line-height: 24px;font-size: 15px;color: #e74c3c;}
-#footer .footer-top .contact-slide a {color: #cccccc;}
+#footer .footer-top .contact-slide a {color: #000000;}
 #footer .footer-top .contact-slide a:hover {color: #e74c3c;text-decoration: none;}
 #footer .footer-bottom {padding: 27px 0;background: #181717;}
 #footer .footer-bottom .coyp-right {line-height: 26px;font-size: 14px;color: #ffffff;display: inline-block;}
